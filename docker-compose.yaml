@@ -1,8 +1,17 @@
-# volumes:
+volumes:
+    postgres-data:
+        external: true
+    pg-admin:
+        external: true
+
 services:
     fastapi:
         environment:
+            SIGNING_KEY: 85500cbac6d0af04df9bf72618432ed39bcaf822fb537babdc5151735bead3f5
             CORS_HOST: http://localhost:5173
+            WAIT_HOST: example_db:5432
+            WAIT_BEFORE: 5
+            WAIT_TIMEOUT: 60
             DATABASE_URL: postgresql://example_user:secret@postgres/example_db
         build:
             context: api
@@ -46,9 +55,3 @@ services:
             - PGADMIN_DEFAULT_EMAIL: example@tt.com
             - PGADMIN_DEFAULT_PASSWORD: password
             - PGADMIN_DISABLE_POSTFIX: 1
-
-volumes:
-    postgres-data:
-        external: true
-    pg-admin:
-        external: true
