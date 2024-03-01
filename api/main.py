@@ -2,9 +2,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from authenticator import authenticator
+import sys
+from routers import accounts
+
+print("SIGNING_KEY in main.py:", os.environ.get("SIGNING_KEY"))
 
 app = FastAPI()
 app.include_router(authenticator.router)
+app.include_router(accounts.router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,6 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# app.include_router(authenticator.router, tags=['Auth'])
 
 @app.get("/api/launch-details")
 def launch_details():
