@@ -2,10 +2,8 @@ from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from authenticator import authenticator
-import sys
 from routers import accounts
 
-print("SIGNING_KEY in main.py:", os.environ.get("SIGNING_KEY"))
 
 app = FastAPI()
 app.include_router(authenticator.router)

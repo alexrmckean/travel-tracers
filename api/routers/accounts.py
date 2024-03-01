@@ -13,12 +13,9 @@ from pydantic import BaseModel
 from queries.accounts import (
     AccountIn,
     AccountOut,
-    Queries,
+    AccountQueries,
     DuplicateAccountError,
 )
-import logging
-
-logger = logging.getLogger(__name__)
 
 class AccountForm(BaseModel):
     username: str
@@ -38,12 +35,10 @@ async def create_account(
     info: AccountIn,
     request: Request,
     response: Response,
-    accounts: Queries = Depends(),
+    accounts: AccountQueries = Depends(),
 ):
-    logger.info(f"Received data: {info}")
 
     hashed_password = authenticator.hash_password(info.password)
-    logger.info(f"Hashed password: {hashed_password}")
     try:
         account = accounts.create(info, hashed_password)
     except DuplicateAccountError as e:
@@ -51,10 +46,8 @@ async def create_account(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cannot create an account with those credentials",
         )
-    logger.info(f"Account created: {account}")
+
 
     form = AccountForm(username=info.email, password=info.password)
-    logger.info(f"Account form: {form}")
     token = await authenticator.login(response, request, form, accounts)
-    logger.info(f"Generated token: {token}")
     return AccountToken(account=account, **token.dict())
