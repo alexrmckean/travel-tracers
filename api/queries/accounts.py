@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from jwtdown_fastapi.authentication import Token
 
-
 class DuplicateAccountError(ValueError):
     pass
 
