@@ -73,6 +73,55 @@ class ItineraryQueries:
                 id = result.fetchone()[0]
                 return self.itinerary_in_to_out(id, itinerary)
 
+    def delete(self, itinerary_id: int) -> bool:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM itinerary
+                        WHERE id = %s
+                        """,
+                        [itinerary_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
+
+    def update(self, itinerary_id: int, itinerary: ItineraryIn) -> Union[ItineraryOut, Error]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE itinerary
+                        SET name = %s
+                            , destination = %s
+                            , from_date = %s
+                            , to_date = %s
+                            , num_travelers = %s
+                        WHERE id = %s
+                        """,
+                        [
+                            itinerary.name,
+                            itinerary.destination,
+                            itinerary.from_date,
+                            itinerary.to_date,
+                            itinerary.num_travelers,
+                            itinerary_id,
+                        ]
+                    )
+
+                    return self.itinerary_in_to_out(itinerary_id, itinerary)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not update the itinerary"}
 
     def itinerary_in_to_out(self, id: int, itinerary: ItineraryIn):
         old_data = itinerary.dict()
