@@ -25,7 +25,7 @@ def create_itinerary(
 
 
 @router.get("/api/itinerary/{itinerary_id}", response_model=Optional[ItineraryOut])
-def get_itinerary(
+def get_interary(
     itinerary_id: int,
     response: Response,
     repo: ItineraryQueries = Depends(),
@@ -44,7 +44,7 @@ def delete_itinerary(
     return repo.delete(itinerary_id)
 
 
-@router.put("/api/itinerary/{itinerary_id}", response_model=Union[ItineraryOut, Error])
+@router.put("/itinerary{itinerary_id}", response_model=Union[ItineraryOut, Error])
 def update_itinerary(
     itinerary_id: int,
     itinerary: ItineraryIn,
