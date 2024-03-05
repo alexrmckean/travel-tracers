@@ -47,10 +47,8 @@ class AccountQueries:
             return {"message": "Could not get that account"}
 
 
-
-
     def create(self, info:AccountIn, hashed_password:str) -> AccountOutWithPassword:
-         with pool.connection() as conn:
+        with pool.connection() as conn:
             # get a cursor (something to run SQL with)
             with conn.cursor() as db:
                 # Run our INSERT statement

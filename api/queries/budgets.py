@@ -3,14 +3,17 @@ from typing import Optional, Union, List
 from datetime import date
 from queries.pool import pool
 
+
 class Error (BaseModel):
     message: str
+
 
 class BudgetIn(BaseModel):
     description: Optional[str]
     amount: int
     date: date
     payment_method: str
+    method: str
 
 class BudgetOut(BaseModel):
     id: int
@@ -18,6 +21,7 @@ class BudgetOut(BaseModel):
     amount: int
     date: date
     payment_method: str
+
 
 class BudgetQueries:
     def get_one(self, budget_id: int) -> Optional[BudgetOut]:
@@ -30,10 +34,10 @@ class BudgetQueries:
                     result = db.execute(
                         """
                         SELECT id
-                             , description
-                             , amount
-                             , date
-                             , payment_method
+                                , description
+                                , amount
+                                , date
+                                , payment_method
                         FROM budgets
                         WHERE id = %s
                         """,
@@ -75,9 +79,9 @@ class BudgetQueries:
                         """
                         UPDATE budgets
                         SET description = %s
-                          , amount = %s
-                          , date = %s
-                          , payment_method = %s
+                            , amount = %s
+                            , date = %s
+                            , payment_method = %s
                         WHERE id = %s
                         """,
                         [
