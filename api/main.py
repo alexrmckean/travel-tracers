@@ -2,7 +2,7 @@ from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from authenticator import authenticator
-from routers import accounts, budgets, itinerary, packing_list
+from routers import accounts, budgets, itinerary, packing_list, accommodations
 
 
 
@@ -12,6 +12,7 @@ app.include_router(accounts.router)
 app.include_router(budgets.router)
 app.include_router(itinerary.router)
 app.include_router(packing_list.router)
+app.include_router(accommodations.router)
 
 
 app.add_middleware(
