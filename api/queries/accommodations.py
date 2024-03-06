@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, Union, List
 from queries.pool import pool
+from datetime import date
 
 
 class Error (BaseModel):
@@ -10,6 +11,9 @@ class Error (BaseModel):
 class AccommodationsIn(BaseModel):
     hotel: str
     flight_number: str
+    flight_number_2: Optional[str]
+    from_date: date
+    to_date: date
     notes: Optional[str]
 
 
@@ -17,6 +21,9 @@ class AccommodationsOut(BaseModel):
     id: int
     hotel: str
     flight_number: str
+    flight_number_2: Optional[str]
+    from_date: date
+    to_date: date
     notes: Optional[str]
 
 
@@ -28,14 +35,17 @@ class AccommodationsQueries:
                         result = db.execute(
                             """
                             INSERT INTO accommodations
-                                (hotel, flight_number, notes)
+                                (hotel, flight_number, flight_number_2, from_date, to_date, notes)
                             VALUES
-                                (%s, %s, %s)
+                                (%s, %s, %s, %s, %s, %s)
                             RETURNING id;
                             """,
                             [
                                 accommodations.hotel,
                                 accommodations.flight_number,
+                                accommodations.flight_number_2,
+                                accommodations.from_date,
+                                accommodations.to_date,
                                 accommodations.notes,
                             ]
                         )
@@ -53,6 +63,9 @@ class AccommodationsQueries:
                         SELECT id
                                 , hotel
                                 , flight_number
+                                , flight_number_2
+                                , from_date
+                                , to_date
                                 , notes
                         FROM accommodations
                         WHERE id = %s
@@ -74,7 +87,7 @@ class AccommodationsQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, hotel, flight_number, notes
+                        SELECT id, hotel, flight_number, flight_number_2, from_date, to_date, notes
                         FROM accommodations
                         ORDER BY id;
                         """
@@ -97,12 +110,18 @@ class AccommodationsQueries:
                         UPDATE accommodations
                         SET hotel = %s
                             , flight_number = %s
+                            , flight_number_2 = %s
+                            , from_date = %s
+                            , to_date = %s
                             , notes = %s
                         WHERE id = %s
                         """,
                         [
                             accommodations.hotel,
                             accommodations.flight_number,
+                            accommodations.flight_number_2,
+                            accommodations.from_date,
+                            accommodations.to_date,
                             accommodations.notes,
                             accommodations_id
                         ]
@@ -140,5 +159,8 @@ class AccommodationsQueries:
             id=record[0],
             hotel=record[1],
             flight_number=record[2],
-            notes=record[3],
+            flight_number_2=record[3],
+            from_date=record[4],
+            to_date=record[5],
+            notes=record[6],
         )

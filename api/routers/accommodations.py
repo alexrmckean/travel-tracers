@@ -23,11 +23,10 @@ router = APIRouter()
 @router.post("/api/accommodations", response_model=Union[AccommodationsOut, Error])
 def create_accommodations(
     accommodations: AccommodationsIn,
-    response: Response,
     repo: AccommodationsQueries = Depends(),
 ):
-    response.status_code = 400
     return repo.create(accommodations)
+
 
 
 @router.get("/api/accommodations/{accommodations_id}", response_model=Optional[AccommodationsOut])
