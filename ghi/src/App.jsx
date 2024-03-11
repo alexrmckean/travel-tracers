@@ -16,6 +16,7 @@ console.table(import.meta.env)
 // When using environment variables, you should do a check to see if
 // they are defined or not and throw an appropriate error message
 const API_HOST = import.meta.env.VITE_API_HOST
+const API_URL = import.meta.env.VITE_API_URL
 
 if (!API_HOST) {
     throw new Error('VITE_API_HOST is not defined')
@@ -59,7 +60,7 @@ function App() {
     }, [])
 
     return (
-        // <AuthProvider>
+        <AuthProvider baseUrl={API_URL}>
             <Router>
                 <Routes>
                     <Route
@@ -68,7 +69,7 @@ function App() {
                     />
                 </Routes>
             </Router>
-        // </AuthProvider>
+         </AuthProvider>
     )
 }
 

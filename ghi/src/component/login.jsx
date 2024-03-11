@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from './authSlice';
 import axios from 'axios'
+import { useAuthContext} from '@galvanize-inc/jwtdown-for-react';
 
 function LoginLogout() {
   const [username, setUsername] = useState('');
