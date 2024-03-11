@@ -8,6 +8,8 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import Accommodations from './getAccommodations'
+import Account from './accountsList'
+import Packing from './packingList'
 
 
 // All your environment variables in vite are in this object
@@ -60,16 +62,24 @@ function App() {
     }, [])
 
     return (
-        <AuthProvider baseUrl={API_URL}>
+        // <AuthProvider>
             <Router>
                 <Routes>
                     <Route
                         path="/api/accommodations"
                         element={<Accommodations />}
                     />
+                    <Route
+                        path="/api/accounts"
+                        element={<Account />}
+                    />
+                    <Route
+                        path="/api/packing_list"
+                        element={<Packing />}
+                    />
                 </Routes>
             </Router>
-         </AuthProvider>
+        //  </AuthProvider>
     )
 }
 
