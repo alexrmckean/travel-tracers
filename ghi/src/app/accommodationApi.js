@@ -9,38 +9,35 @@ export const accommodationsApi = createApi({
         accommodations: builder.query({
             query: () => 'api/accommodations',
         }),
-        endpoints: builder => ({
-    login: builder.mutation({
-      query: info => {
-        let formData = null;
-        if (info instanceof HTMLElement) {
-          formData = new FormData(info);
-        } else {
-          formData = new FormData();
-          formData.append('username', info.email);
-          formData.append('password', info.password);
-        }
-        return {
-          url: '/token',
+        login: builder.mutation({
+            query: info => {
+                let formData = null;
+                if (info instanceof HTMLElement) {
+                formData = new FormData(info);
+                } else {
+                formData = new FormData();
+                formData.append('username', info.username);
+                formData.append('password', info.password);
+                }
+                return {
+                url: '/token',
+                method: 'POST',
+                body: formData,
+                credentials: 'include',
+                };
+            },
+            invalidatesTags: result => {
+                return (result && ['Account']) || [];
+            },
+        }),
+        getToken: builder.query({
+            query: () => ({
+                url: '/token',
 
-          method: 'post',
-          body: formData,
-          credentials: 'include',
-        };
-      },
-      invalidatesTags: result => {
-        return (result && ['Account']) || [];
-      },
-    }),
-    getToken: builder.query({
-      query: () => ({
-        url: '/token',
-
-        credentials: 'include',
-      }),
-      providesTags: ['Token'],
-    }),
-  }),
-}),
-});
+                credentials: 'include',
+            }),
+            providesTags: ['Account'],
+            }),
+        }),
+        })
 export const { useAccommodationsQuery, useLoginMutation} = accommodationsApi

@@ -10,6 +10,8 @@ import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import Accommodations from './getAccommodations'
 import Account from './accountsList'
 import Packing from './packingList'
+import Login from './login'
+
 
 
 // All your environment variables in vite are in this object
@@ -69,18 +71,10 @@ function App() {
                         path="/api/accommodations"
                         element={<Accommodations />}
                     />
-                    <Route
-                        path="/api/accounts"
-                        element={<Account />}
-                    />
-                    <Route
-                        path="/api/packing_list"
-                        element={<Packing />}
-                    />
                 </Routes>
             </Router>
-        //  </AuthProvider>
+         </AuthProvider>
     )
 }
 
-export default App
+export default App;
