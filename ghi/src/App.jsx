@@ -12,6 +12,7 @@ import Packing from './getPackingList'
 import Login from './login'
 import Budget from './getBudget'
 import SignUp from './SignUpPage'
+import Itinerary from './getItinerary'
 
 
 
@@ -87,6 +88,10 @@ function App() {
                     <Route
                         path="/api/signup"
                         element={<SignUp />}
+                    />
+                    <Route
+                        path='/api/itinerary/'
+                        element={<Itinerary />}
                     />
                 </Routes>
             </Router>

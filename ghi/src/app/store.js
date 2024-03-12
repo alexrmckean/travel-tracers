@@ -4,6 +4,7 @@ import { accommodationsApi } from './accommodationApi';
 import  accountReducer  from './AccountSlice';
 import { packingListApi } from './packingListApi';
 import { budgetApi } from './budgetApi';
+import { itineraryApi } from './itineraryApi';
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         [budgetApi.reducerPath]: budgetApi.reducer,
         // [AccountSlice.reducerPath]: AccountSlice.reducer,
         account: accountReducer,
+        [itineraryApi.reducerPath]: itineraryApi.reducer,
         // auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -20,6 +22,7 @@ export const store = configureStore({
             .concat(accommodationsApi.middleware)
             .concat(packingListApi.middleware)
             .concat(budgetApi.middleware)
+            .concat(itineraryApi.middleware)
 })
 
 setupListeners(store.dispatch)

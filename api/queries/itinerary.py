@@ -123,6 +123,28 @@ class ItineraryQueries:
             print(e)
             return {"message": "Could not update the itinerary"}
 
+    def get_all(self) -> Union[Error, List[ItineraryOut]]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    result = db.execute(
+                        """
+                        SELECT id, name, destination, from_date, to_date, num_travelers
+                        FROM itinerary
+                        ORDER BY id;
+                        """
+                    )
+                    return [
+                        self.record_to_itinerary_out(record)
+                        for record in result
+                    ]
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get all itineraries"}
+
     def itinerary_in_to_out(self, id: int, itinerary: ItineraryIn):
         old_data = itinerary.dict()
         return ItineraryOut(id=id, **old_data)
