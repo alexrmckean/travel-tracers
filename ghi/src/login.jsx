@@ -7,7 +7,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSumbit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log('login');
     console.log({ username, password });
@@ -18,10 +18,10 @@ const Login = () => {
   }
 
 
-   return (
+    return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSumbit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username">Username:</label>
           <input
