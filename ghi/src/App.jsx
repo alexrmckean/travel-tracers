@@ -8,10 +8,10 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import Accommodations from './getAccommodations'
-import Account from './accountsList'
 import Packing from './getPackingList'
 import Login from './login'
 import Budget from './getBudget'
+import SignUp from './SignUpPage'
 
 
 
@@ -34,11 +34,11 @@ if (!API_HOST) {
 //  *
 //  * @returns {React.ReactNode}
 //  */
-// function App() {
-//     // Replace this App component with your own.
-//     /** @type {[LaunchInfo | undefined, (info: LaunchInfo) => void]} */
-//     const [launchInfo, setLaunchInfo] = useState()
-//     const [error, setError] = useState(null)
+function App() {
+    // Replace this App component with your own.
+    // /** @type {[LaunchInfo | undefined, (info: LaunchInfo) => void]} */
+    // const [launchInfo, setLaunchInfo] = useState()
+    // const [error, setError] = useState(null)
 
 //     useEffect(() => {
 //         async function getData() {
@@ -65,16 +65,12 @@ if (!API_HOST) {
 //     }, [])
 
     return (
-        // <AuthProvider>
+        <AuthProvider baseUrl={API_HOST}>
             <Router>
                 <Routes>
                     <Route
                         path="/api/accommodations"
                         element={<Accommodations />}
-                    />
-                    <Route
-                        path="/api/accounts"
-                        element={<Account />}
                     />
                     <Route
                         path="/api/packing_list"
@@ -84,9 +80,17 @@ if (!API_HOST) {
                         path="/api/budgets"
                         element={<Budget />}
                     />
+                    <Route
+                        path="/api/login"
+                        element={<Login />}
+                    />
+                    <Route
+                        path="/api/signup"
+                        element={<SignUp />}
+                    />
                 </Routes>
             </Router>
-        //  </AuthProvider>
+        </AuthProvider>
     )
 }
 
