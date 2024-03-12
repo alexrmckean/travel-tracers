@@ -8,7 +8,18 @@ export const budgetApi = createApi({
     endpoints: (builder) => ({
         budgets: builder.query({
             query: () => 'api/budgets',
+            providesTags: ['BudgetList']
         }),
+        createBudget: builder.mutation({
+            query: (body) => ({
+                url: '/api/budgets',
+                body,
+                method: 'POST',
+                credentials: 'include',
+            }),
+            invalidatesTags: ['BudgetList']
+        })
     })
 })
-export const { useBudgetsQuery } = budgetApi
+export const { useBudgetsQuery, useCreateBudgetMutation } = budgetApi
+export default budgetApi.reducer;

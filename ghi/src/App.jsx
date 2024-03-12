@@ -12,8 +12,9 @@ import Packing from './getPackingList'
 import Login from './login'
 import Budget from './getBudget'
 import SignUp from './SignUpPage'
-import Itinerary from './getItinerary'
 import Nav from './Nav';
+import Itinerary from './getItinerary'
+import BudgetForm from './budgetForm'
 
 
 
@@ -84,6 +85,10 @@ function App() {
                         element={<Budget />}
                     />
                     <Route
+                        path='/api/budgets/create/'
+                        element={<BudgetForm />}
+                    />
+                    <Route
                         path="/api/login"
                         element={<Login />}
                     />
@@ -97,7 +102,7 @@ function App() {
                     />
                 </Routes>
             </Router>
-        </AuthProvider>
+        // </AuthProvider>
     )
 }
 

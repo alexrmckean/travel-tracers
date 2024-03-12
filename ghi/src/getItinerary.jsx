@@ -34,7 +34,7 @@ function Itinerary() {
     return (
     <>
         <div className="my-5 container">
-            <h1>My Initerary</h1>
+            <h1>My Itinerary</h1>
         </div>
         <table className="table table-striped">
             <thead className="thead-dark">

@@ -1,7 +1,12 @@
 import { useBudgetsQuery } from './app/budgetApi'
+import { Link } from 'react-router-dom';
 
 function Budget() {
     const { data: budgets = [] } = useBudgetsQuery()
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
 
     return (
         <div>
@@ -22,6 +27,9 @@ function Budget() {
                     </div>
                 ))}
             </ul>
+            <Link to="/api/budgets/create/">
+                <button type='button'>Create a budget</button>
+            </Link>
         </div>
     )
 }
