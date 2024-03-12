@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import LogoutButton from './LogoutButton';
 
 function Nav() {
     return (
@@ -18,6 +19,10 @@ function Nav() {
                     </li>
                     <li className="nav-item">
                         <NavLink className="nav-link" to="api/packing_list">Packing List</NavLink>
+                     </li>
+                    {LogoutButton}
+                        <li className="nav-item">
+                            <LogoutButton />
                     </li>
                 </ul>
                 </div>
@@ -25,5 +30,4 @@ function Nav() {
         </nav>
     );
 }
-
 export default Nav;

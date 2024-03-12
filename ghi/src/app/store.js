@@ -5,6 +5,7 @@ import  accountReducer  from './AccountSlice';
 import { packingListApi } from './packingListApi';
 import { budgetApi } from './budgetApi';
 import { itineraryApi } from './itineraryApi';
+import logoutReducer from './logoutSlice';
 
 
 export const store = configureStore({
@@ -12,10 +13,11 @@ export const store = configureStore({
         [accommodationsApi.reducerPath]: accommodationsApi.reducer,
         [packingListApi.reducerPath]: packingListApi.reducer,
         [budgetApi.reducerPath]: budgetApi.reducer,
-        // [AccountSlice.reducerPath]: AccountSlice.reducer,
-        account: accountReducer,
         [itineraryApi.reducerPath]: itineraryApi.reducer,
-        // auth: authReducer,
+        account: accountReducer,
+        logout: logoutReducer,
+
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
