@@ -1,55 +1,44 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const accountsApi = createApi({
-    reducerPath: 'accounts',
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_HOST,
-    }),
-    endpoints: (builder) => ({
-        getAccounts: builder.query({
-            query: () => '/api/accounts',
-        }),
-        createAccount: builder.mutation({
-            query: (data) => ({
-                url: '/api/accounts',
-                body: data,
-                method: 'POST',
-            }),
-        }),
-        getToken: builder.query({
-            query: () => ({
-                url: '/token',
-            }),
-            providesTags: ['Account']
-        }),
-        logout: builder.mutation({
-            query: () => ({
-                url: '/token',
-                method: 'DELETE'
-            }),
-            invalidatesTags: ['Account']
-        }),
-        signup: builder.mutation({
-            query: body => ({
-                url: '/api/accounts'
-                // body,
-                // method: 'POST',
-            }),
-            invalidatesTags: ['Account']
-        }),
-            login: builder.mutation({
-                query: () => ({
-                    url: '/token'
-                })
-        })
-    }),
-})
+export const createAccount = createAsyncThunk(
+  'account/createAccount',
+  async (accountData) => {
+    const response = await fetch('/api/accounts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(accountData),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to create account');
+    }
+    return await response.json();
+  }
+);
 
-export const {
-    useGetAccountsQuery,
-    useCreateAccountMutation,
-    useGetTokenQuery,
-    useLogoutMutation,
-    useSignupMutation,
-    useLoginMutation,
-} = accountsApi;
+const accountSlice = createSlice({
+  name: 'account',
+  initialState: {
+    status: 'idle',
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createAccount.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(createAccount.fulfilled, (state) => {
+        state.status = 'succeeded';
+      })
+      .addCase(createAccount.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message || 'Failed to create account';
+      });
+  },
+});
+
+export default accountSlice.reducer;

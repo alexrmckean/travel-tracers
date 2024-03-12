@@ -13,7 +13,6 @@ class BudgetIn(BaseModel):
     amount: int
     date: date
     payment_method: str
-    method: str
 
 class BudgetOut(BaseModel):
     id: int

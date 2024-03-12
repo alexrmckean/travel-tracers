@@ -8,7 +8,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import Accommodations from './getAccommodations'
-import Account from './accountsList'
+// import Account from './accountsList'
 import Packing from './packingList'
 import Login from './login'
 
@@ -64,13 +64,15 @@ function App() {
     }, [])
 
     return (
-        // <AuthProvider>
+        <AuthProvider>
             <Router>
                 <Routes>
                     <Route
                         path="/api/accommodations"
                         element={<Accommodations />}
-                    />
+                        <Route
+                        path="/api/login"
+                        element={<Login />}/>
                 </Routes>
             </Router>
          </AuthProvider>
