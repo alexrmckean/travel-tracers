@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { accommodationsApi } from './accommodationApi';
 import { accountsApi } from './accountsApi';
 import { packingListApi } from './packingListApi';
+import { budgetApi } from './budgetApi';
 
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
         [accommodationsApi.reducerPath]: accommodationsApi.reducer,
         [accountsApi.reducerPath]: accountsApi.reducer,
         [packingListApi.reducerPath]: packingListApi.reducer,
+        [budgetApi.reducerPath]: budgetApi.reducer,
         // auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
@@ -17,6 +19,7 @@ export const store = configureStore({
             .concat(accommodationsApi.middleware)
             .concat(accountsApi.middleware)
             .concat(packingListApi.middleware)
+            .concat(budgetApi.middleware)
 })
 
 setupListeners(store.dispatch)

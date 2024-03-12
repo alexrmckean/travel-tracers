@@ -13,8 +13,12 @@ class BudgetIn(BaseModel):
     amount: int
     date: date
     payment_method: str
-    method: str
-
+    # method: str
+    #WHAT IS THIS EXTRA METHOD???^
+    #
+    #
+    #
+    #
 class BudgetOut(BaseModel):
     id: int
     description: Optional[str]
