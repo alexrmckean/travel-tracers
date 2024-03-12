@@ -13,6 +13,8 @@ import Login from './login'
 import Budget from './getBudget'
 import SignUp from './SignUpPage'
 import Itinerary from './getItinerary'
+import SignUp from './SignUpPage'
+import Nav from './Nav';
 
 
 
@@ -66,8 +68,9 @@ function App() {
 //     }, [])
 
     return (
-        <AuthProvider baseUrl={API_HOST}>
+        // <AuthProvider>
             <Router>
+                <Nav />
                 <Routes>
                     <Route
                         path="/api/accommodations"
@@ -93,6 +96,15 @@ function App() {
                         path='/api/itinerary/'
                         element={<Itinerary />}
                     />
+                    <Route
+                        path="/api/login"
+                        element={<Login />}
+                    />
+                    <Route
+                        path="/api/signup"
+                        element={<SignUp />}
+                    />
+
                 </Routes>
             </Router>
         </AuthProvider>

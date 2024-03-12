@@ -14,3 +14,15 @@
     font-size: calc(10px + 2vmin);
     color: white;
 }
+
+.navbar-nav {
+  list-style: none; /* Removes the bullet points */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Align items in a row */
+  align-items: center; /* Center align the nav items vertically */
+}
+
+.nav-item {
+  margin-right: 10px; /* Adds spacing between the nav items */
+}
