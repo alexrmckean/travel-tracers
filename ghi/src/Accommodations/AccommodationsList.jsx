@@ -1,4 +1,4 @@
-import { useAccommodationsQuery } from './app/accommodationApi'
+import { useAccommodationsQuery } from '../app/AccommodationSlice'
 
 function Accommodations() {
     const { data: accommodations = [] } = useAccommodationsQuery()

@@ -1,4 +1,4 @@
-import { useItineraryQuery } from './app/itineraryApi'
+import { useItineraryQuery } from '../app/ItinerarySlice'
 
 
 

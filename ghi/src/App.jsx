@@ -1,5 +1,6 @@
 // This makes VSCode check types as if you are using TypeScript
 //@ts-check
+import { useParams } from 'react-router-dom';
 import React from 'react'
 import { useState, useEffect } from 'react'
 import ErrorNotification from './ErrorNotification'
@@ -7,16 +8,21 @@ import Construct from './Construct'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
-import Accommodations from './getAccommodations'
-import Packing from './getPackingList'
-import Login from './login'
-import Budget from './getBudget'
-import SignUp from './SignUpPage'
-import Nav from './Nav';
-import Itinerary from './getItinerary'
-import BudgetForm from './budgetForm'
+import Accommodations from './Accommodations/AccommodationsList'
+import Packing from './Packing/PackingList'
+import Login from './Account/LoginPage'
+import Budget from './Budget/BudgetList'
+import SignUp from './Account/SignUpPage'
+import Nav from './Components/Nav';
+import Itinerary from './Itinerary/ItineraryList'
+import BudgetForm from './Budget/CreateBudgetForm'
+import ItineraryForm from './Itinerary/CreateItineraryForm'
+import EditBudgetForm from './Budget/EditBudgetForm'
 
-
+function EditBudgetFormWrapper() {
+    const { budget_id } = useParams(); // Extract budget_id from URL
+    return <EditBudgetForm budgetId={budget_id} />;
+}
 
 // All your environment variables in vite are in this object
 console.table(import.meta.env)
@@ -76,6 +82,10 @@ function App() {
                         path="/api/accommodations"
                         element={<Accommodations />}
                     />
+                        <Route
+                        path="/api/login"
+                        element={<Login />}/>
+
                     <Route
                         path="/api/packing_list"
                         element={<Packing />}
@@ -85,7 +95,7 @@ function App() {
                         element={<Budget />}
                     />
                     <Route
-                        path='/api/budgets/create/'
+                        path="/api/budgets/create/"
                         element={<BudgetForm />}
                     />
                     <Route
@@ -100,9 +110,17 @@ function App() {
                         path='/api/itinerary/'
                         element={<Itinerary />}
                     />
+                    <Route
+                        path='/api/itinerary/create/'
+                        element={<ItineraryForm />}
+                    />
+                    <Route
+                        path='/api/budgets/edit/:budget_id'
+                        element={<EditBudgetFormWrapper />}
+                    />
                 </Routes>
             </Router>
-        // </AuthProvider>
+         </AuthProvider>
     )
 }
 
