@@ -21,10 +21,18 @@ import EditBudgetForm from './Budget/EditBudgetForm'
 import EditItineraryForm from './Itinerary/EditItineraryForm';
 import BudgetDetails from './Budget/BudgetDetails';
 import ItineraryDetails from './Itinerary/ItineraryDetails';
+import AccommodationForm from './Accommodations/CreateAccommodaiton'
+import EditAccommodationForm from './Accommodations/EditAccommodationForm';
+import AccommodationDetails from './Accommodations/AccommodationsDetails';
 
 function EditBudgetFormWrapper() {
     const { budget_id } = useParams(); // Extract budget_id from URL
     return <EditBudgetForm budgetId={budget_id} />;
+}
+
+function EditAccommodationFormWrapper() {
+    const { accommodation_id } = useParams(); // Extract budget_id from URL
+    return <EditAccommodationForm accommodationId={ accommodation_id } />;
 }
 
 function EditItineraryFormWrapper() {
@@ -137,6 +145,18 @@ function App() {
                     <Route
                         path="/api/itinerary/:itinerary_id"
                         element={<ItineraryDetails />}
+                    />
+                    <Route
+                        path='/api/accommodations/create/'
+                        element={<AccommodationForm />}
+                    />
+                    <Route
+                        path='/api/accommodations/edit/:accommodation_id'
+                        element={<EditAccommodationFormWrapper />}
+                    />
+                    <Route
+                        path="/api/accommodations/:accommodation_id"
+                        element={<AccommodationDetails />}
                     />
                 </Routes>
             </Router>

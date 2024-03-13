@@ -9,6 +9,10 @@ export const accommodationsApi = createApi({
         accommodations: builder.query({
             query: () => 'api/accommodations',
         }),
+        accommodationsById: builder.query({
+            query: (accommodation_id) => `api/accommodations/${accommodation_id}`,
+            providesTags: (result, error, accommodation_id) => [{ type: 'Accommodation', accommodation_id }],
+        }),
         login: builder.mutation({
             query: info => {
                 let formData = null;
@@ -30,6 +34,38 @@ export const accommodationsApi = createApi({
                 return (result && ['Account']) || [];
             },
         }),
+        createAccommodations: builder.mutation({
+            query: (body) => ({
+                url: '/api/accommodations',
+                body,
+                method: 'POST',
+                credentials: 'include',
+            }),
+            invalidatesTags: ['AccommodationsList']
+        }),
+        updateAccommodations: builder.mutation({
+            query: ({ accommodation_id, ...body }) => {
+                return {
+                url: `api/accommodations/${accommodation_id}`,
+                body,
+                method: "PUT",
+                credentials: "include",
+            }},
+        }),
+        deleteAccommodations: builder.mutation({
+            query: (accommodaiton_id) => ({
+                url: `/api/accommodations/${accommodaiton_id}`,
+                method: 'DELETE',
+                credentials: 'include',
+            }),
+            invalidatesTags: (response, error, arg) => {
+                console.log({response, error, arg})
+                return [
+                    {type: 'accommodations', id: 'MINE'},
+                    {type: 'accommodaitons', id: accommodaiton_id}
+                ]
+            }
+        }),
         getToken: builder.query({
             query: () => ({
                 url: '/token',
@@ -40,4 +76,4 @@ export const accommodationsApi = createApi({
             }),
         }),
         })
-export const { useAccommodationsQuery, useLoginMutation} = accommodationsApi
+export const { useAccommodationsQuery, useAccommodationsByIdQuery, useLoginMutation, useCreateAccommodationsMutation, useUpdateAccommodationsMutation, useDeleteAccommodationsMutation, } = accommodationsApi
