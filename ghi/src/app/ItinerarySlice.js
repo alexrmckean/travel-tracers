@@ -9,6 +9,10 @@ export const itineraryApi = createApi({
         itinerary: builder.query({
             query: () => 'api/itinerary',
         }),
+        itineraryById: builder.query({
+            query: (itinerary_id) => `api/itinerary/${itinerary_id}`,
+            providesTags: (result, error, itinerary_id) => [{ type: 'itinerary', itinerary_id }],
+        }),
         createItinerary: builder.mutation({
             query: (body) => ({
                 url: '/api/itinerary',
@@ -17,17 +21,34 @@ export const itineraryApi = createApi({
                 credentials: 'include',
             }),
             invalidatesTags: ['ItineraryList']
-        })
-    })
+        }),
+        updateItinerary: builder.mutation({
+            query: ({ itinerary_id, ...body }) => {
+                return {
+                url: `api/itinerary/${itinerary_id}`,
+                body,
+                method: "PUT",
+                credentials: "include",
+            }},
+        }),
+        deleteItinerary: builder.mutation({
+            query: (itinerary_id) => ({
+                url: `/api/itinerary/${itinerary_id}`,
+                method: 'DELETE',
+                credentials: 'include',
+            }),
+            invalidatesTags: (response, error, arg) => {
+                console.log({response, error, arg})
+                return [
+                    {type: 'itinerary', id: 'MINE'},
+                    {type: 'itinerary', id: itinerary_id}
+                ]
+            }
+        }),
+    }),
 })
 
 
 
-
-
-
-
-
-
-export const { useItineraryQuery, useCreateItineraryMutation } = itineraryApi
+export const { useItineraryQuery, useItineraryByIdQuery, useCreateItineraryMutation, useUpdateItineraryMutation, useDeleteItineraryMutation } = itineraryApi
 export default itineraryApi.reducer;

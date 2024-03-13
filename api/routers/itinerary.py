@@ -50,7 +50,7 @@ def delete_itinerary(
     return repo.delete(id)
 
 
-@router.put("/itinerary{id}", response_model=Union[ItineraryOut, Error])
+@router.put("/api/itinerary/{id}", response_model=Union[ItineraryOut, Error])
 def update_itinerary(
     id: int,
     itinerary: ItineraryIn,

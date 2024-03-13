@@ -10,6 +10,10 @@ export const budgetApi = createApi({
             query: () => 'api/budgets',
             providesTags: ['BudgetList']
         }),
+        budgetById: builder.query({
+            query: (budget_id) => `api/budgets/${budget_id}`,
+            providesTags: (result, error, budget_id) => [{ type: 'Budget', budget_id }],
+        }),
         createBudget: builder.mutation({
             query: (body) => ({
                 url: '/api/budgets',
@@ -45,5 +49,5 @@ export const budgetApi = createApi({
     }),
 })
 
-export const { useBudgetsQuery, useCreateBudgetMutation, useUpdateBudgetMutation, useDeleteBudgetMutation } = budgetApi
+export const { useBudgetsQuery, useBudgetByIdQuery, useCreateBudgetMutation, useUpdateBudgetMutation, useDeleteBudgetMutation } = budgetApi
 export default budgetApi.reducer;

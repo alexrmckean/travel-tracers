@@ -18,13 +18,21 @@ import Itinerary from './Itinerary/ItineraryList'
 import BudgetForm from './Budget/CreateBudgetForm'
 import ItineraryForm from './Itinerary/CreateItineraryForm'
 import EditBudgetForm from './Budget/EditBudgetForm'
+import EditItineraryForm from './Itinerary/EditItineraryForm';
+import BudgetDetails from './Budget/BudgetDetails';
+import ItineraryDetails from './Itinerary/ItineraryDetails';
 
 function EditBudgetFormWrapper() {
     const { budget_id } = useParams(); // Extract budget_id from URL
     return <EditBudgetForm budgetId={budget_id} />;
 }
 
-// All your environment variables in vite are in this object
+function EditItineraryFormWrapper() {
+    const { itinerary_id } = useParams();
+    return <EditItineraryForm itineraryId={itinerary_id} />;
+}
+
+// All your environment variables in vite are in this objet
 console.table(import.meta.env)
 
 // When using environment variables, you should do a check to see if
@@ -117,6 +125,18 @@ function App() {
                     <Route
                         path='/api/budgets/edit/:budget_id'
                         element={<EditBudgetFormWrapper />}
+                    />
+                    <Route
+                        path='/api/itinerary/edit/:itinerary_id'
+                        element={<EditItineraryFormWrapper />}
+                    />
+                    <Route
+                        path="/api/budgets/:budget_id"
+                        element={<BudgetDetails />}
+                    />
+                    <Route
+                        path="/api/itinerary/:itinerary_id"
+                        element={<ItineraryDetails />}
                     />
                 </Routes>
             </Router>
