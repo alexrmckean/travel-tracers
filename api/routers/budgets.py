@@ -23,7 +23,7 @@ def create_budget(
     response: Response,
     repo: BudgetQueries = Depends(),
 ):
-    response.status_code = 400
+    
     return repo.create(budget)
 
 @router.get("/api/budgets", response_model=Union[List[BudgetOut], Error])

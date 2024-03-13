@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
-import { accommodationsApi } from './accommodationApi';
+import { accommodationsApi } from './AccommodationSlice';
 import  accountReducer  from './AccountSlice';
-import { packingListApi } from './packingListApi';
-import { budgetApi } from './budgetApi';
-import { itineraryApi } from './itineraryApi';
-import logoutReducer from './logoutSlice';
+import { packingListApi } from './PackingSlice';
+import { budgetApi } from './BudgetSlice';
+import { itineraryApi } from './ItinerarySlice';
+import logoutReducer from './LogoutSlice';
 
 
 export const store = configureStore({

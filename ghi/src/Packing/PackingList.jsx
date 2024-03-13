@@ -1,4 +1,4 @@
-import { usePackingListQuery } from './app/packingListApi'
+import { usePackingListQuery } from '../app/PackingSlice'
 
 function Packing() {
     const { data: packingList = [] } = usePackingListQuery()
