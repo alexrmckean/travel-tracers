@@ -35,7 +35,7 @@ function Budget() {
                                 <DeleteButton budgetId={budget.id} />
                                 <Link to={`/api/budgets/edit/${budget.id}`}>
                                     <button>Edit</button>
-                                     </Link>
+                                </Link>
                             </div>
                         </p>
                     </div>
