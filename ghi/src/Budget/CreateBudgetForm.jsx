@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useCreateBudgetMutation } from '../app/BudgetSlice';
+import { useNavigate } from 'react-router-dom';
 
 function BudgetForm() {
-    const dispatch = useDispatch();
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [date, setDate] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
     const [createBudget] = useCreateBudgetMutation();
+    const navigate = useNavigate(); // Import useNavigate hook
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,6 +19,8 @@ function BudgetForm() {
                 date,
                 payment_method: paymentMethod,
             });
+            // Navigate to the budget list page after successful creation
+            navigate('/api/budgets');
         } catch (error) {
             console.error('Error creating budget:', error);
         }

@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const packingListApi = createApi({
     reducerPath: 'packingList',
@@ -23,26 +23,31 @@ export const packingListApi = createApi({
         updatePackingList: builder.mutation({
             query: ({ packingList_id, ...body }) => {
                 return {
-                    url: `/api/packing_list/${packing_list_id}`,
+                    url: `/api/packing_list/${packingList_id}`,
                     body,
                     method: 'PUT',
                     credentials: 'include',
-                }},
-                invalidatesTags: ['PackingList'],
+                };
+            },
+            invalidatesTags: (result, error, args) => {
+                if (!error && result) {
+                    return [{ type: 'PackingList' }];
+                }
+                return null;
+            },
         }),
         deletePackingList: builder.mutation({
             query: (packingList_id) => ({
-                url: 'api/packing_list/${packingList_id}',
+                url: `/api/packing_list/${packingList_id}`,
                 method: 'DELETE',
                 credentials: 'include',
             }),
             invalidatesTags: (result, error, args) => {
-                console.log(result, error, args)
-                return [
-                    {type: 'packing_list', id: 'MINE'},
-                    {type: 'packing_list', id: packing_list_id}
-                ]
-            }
+                if (!error && result) {
+                    return [{ type: 'PackingList' }];
+                }
+                return null;
+            },
         }),
     }),
 });
@@ -52,5 +57,5 @@ export const {
     useCreatePackingListMutation,
     useUpdatePackingListMutation,
     useDeletePackingListMutation,
-} = packingListApi
+} = packingListApi;
 export default packingListApi.reducer;

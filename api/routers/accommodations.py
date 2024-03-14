@@ -28,7 +28,6 @@ def create_accommodations(
     return repo.create(accommodations)
 
 
-
 @router.get("/api/accommodations/{accommodations_id}", response_model=Optional[AccommodationsOut])
 def get_one_accommodations(
     accommodations_id: int,
@@ -37,7 +36,7 @@ def get_one_accommodations(
 ) -> AccommodationsOut:
     accommodations = repo.get_one(accommodations_id)
     if accommodations is None:
-        response.status_code = 404
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return accommodations
 
 
@@ -54,7 +53,10 @@ def update_accommodations(
     accommodations: AccommodationsIn,
     repo: AccommodationsQueries = Depends(),
 ) -> Union[Error, AccommodationsOut]:
-    return repo.update(accommodations_id, accommodations)
+    updated_accommodations = repo.update(accommodations_id, accommodations)
+    if updated_accommodations is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return updated_accommodations
 
 
 @router.delete("/api/accommodations/{accommodations_id}", response_model=bool)
@@ -62,4 +64,7 @@ def delete_accommodations(
     accommodations_id: int,
     repo: AccommodationsQueries = Depends(),
 ) -> bool:
-    return repo.delete(accommodations_id)
+    deleted = repo.delete(accommodations_id)
+    if not deleted:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return True

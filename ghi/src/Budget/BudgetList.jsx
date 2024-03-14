@@ -8,7 +8,6 @@ function DeleteButton({ budgetId }) {
     const handleDelete = async () => {
         try {
             await deleteBudget(budgetId);
-
         } catch (error) {
             console.error('Error deleting budget:', error);
         }

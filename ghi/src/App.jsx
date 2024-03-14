@@ -11,7 +11,6 @@ import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import Accommodations from './Accommodations/AccommodationsList'
 import Packing from './Packing/PackingList'
 import PackingListForm from './Packing/CreatePackingListForm'
-
 import Login from './Account/LoginPage'
 import Budget from './Budget/BudgetList'
 import SignUp from './Account/SignUpPage'
@@ -20,7 +19,6 @@ import Itinerary from './Itinerary/ItineraryList'
 import BudgetForm from './Budget/CreateBudgetForm'
 import ItineraryForm from './Itinerary/CreateItineraryForm'
 import EditBudgetForm from './Budget/EditBudgetForm'
-
 import EditItineraryForm from './Itinerary/EditItineraryForm';
 import BudgetDetails from './Budget/BudgetDetails';
 import ItineraryDetails from './Itinerary/ItineraryDetails';

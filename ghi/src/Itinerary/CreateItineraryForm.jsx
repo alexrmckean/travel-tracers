@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCreateItineraryMutation } from '../app/ItinerarySlice';
-
+import { useNavigate } from 'react-router-dom';
 
 function ItineraryForm() {
     const [name, setName] = useState('');
@@ -9,6 +9,7 @@ function ItineraryForm() {
     const [toDate, setToDate] = useState('');
     const [numTravelers, setNumTravelers] = useState('');
     const [createItinerary] = useCreateItineraryMutation();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,6 +21,7 @@ function ItineraryForm() {
                 to_date: toDate,
                 num_travelers: numTravelers,
             });
+            navigate('/api/itinerary');
         } catch (error) {
             console.error('Error creating itinerary:', error);
         }

@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useUpdateItineraryMutation } from '../app/ItinerarySlice';
+import { useNavigate } from 'react-router-dom';
+import { useItineraryByIdQuery, useUpdateItineraryMutation } from '../app/ItinerarySlice';
 
-function EditItineraryForm({ itineraryId, initialData}) {
-    const [name, setName] = useState(initialData?.name || '');
-    const [destination, setDestination] = useState(initialData?.destination || '');
-    const [fromDate, setFromDate] = useState(initialData?.fromDate || '');
-    const [toDate, setToDate] = useState(initialData?.toDate || '');
-    const [numTravelers, setNumTravelers] = useState(initialData?.num_travelers || '');
+function EditItineraryForm({ itineraryId}) {
+    const navigate = useNavigate();
+    const [name, setName] = useState('');
+    const [destination, setDestination] = useState('');
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+    const [numTravelers, setNumTravelers] = useState('');
+
+    const {data: initialData, isLoading, isError } = useItineraryByIdQuery(itineraryId);
 
      useEffect(() => {
-        if (!initialData) {
-
+        if (initialData) {
+            setName(initialData.name);
+            setDestination(initialData.destination);
+            setFromDate(initialData.from_date);
+            setToDate(initialData.to_date);
+            setNumTravelers(initialData.num_travelers);
         }
     }, [initialData, itineraryId]);
 
@@ -28,10 +35,16 @@ function EditItineraryForm({ itineraryId, initialData}) {
                 to_date: toDate,
                 num_travelers: numTravelers,
             });
+
+            navigate('/api/itinerary');
+
         } catch (error) {
             console.error('Error editing itinerary:', error);
         }
     }
+
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error fetching data...</div>;
 
     return (
         <div>

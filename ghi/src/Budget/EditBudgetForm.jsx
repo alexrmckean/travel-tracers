@@ -1,36 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useUpdateBudgetMutation } from '../app/BudgetSlice';
+import { useNavigate } from 'react-router-dom';
+import { useUpdateBudgetMutation, useBudgetByIdQuery } from '../app/BudgetSlice';
 
-function EditBudgetForm({ budgetId, initialData}) {
-    const dispatch = useDispatch();
-    const [description, setDescription] = useState(initialData?.description || '');
-    const [amount, setAmount] = useState(initialData?.amount || '');
-    const [date, setDate] = useState(initialData?.date || '');
-    const [paymentMethod, setPaymentMethod] = useState(initialData?.payment_method || '');
+function EditBudgetForm({ budgetId }) {
+    const navigate = useNavigate();
+    const [description, setDescription] = useState('');
+    const [amount, setAmount] = useState('');
+    const [date, setDate] = useState('');
+    const [paymentMethod, setPaymentMethod] = useState('');
 
-     useEffect(() => {
-        if (!initialData) {
-            // Fetch initial data from API using budgetId
+    // Fetch initial data from API using budgetId
+    const { data: initialData, isLoading, isError } = useBudgetByIdQuery(budgetId);
+
+    useEffect(() => {
+        if (initialData) {
+            setDescription(initialData.description);
+            setAmount(initialData.amount);
+            setDate(initialData.date);
+            setPaymentMethod(initialData.payment_method);
         }
-    }, [initialData, budgetId]);
+    }, [initialData]);
 
-    const [createBudget] = useUpdateBudgetMutation();
+    const [updateBudget] = useUpdateBudgetMutation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createBudget({
+            await updateBudget({
                 budget_id: budgetId,
                 description,
                 amount,
                 date,
                 payment_method: paymentMethod,
             });
+            // Navigate to the budget list page after successful update
+            navigate('/api/budgets');
         } catch (error) {
             console.error('Error editing budget:', error);
         }
     }
+
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error fetching data...</div>;
 
     return (
         <div>

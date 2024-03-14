@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const budgetApi = createApi({
     reducerPath: 'budgets',
@@ -21,16 +21,24 @@ export const budgetApi = createApi({
                 method: 'POST',
                 credentials: 'include',
             }),
-            invalidatesTags: ['BudgetList']
+            invalidatesTags: ['BudgetList'],
+            onSuccess: (data, variables, api) => {
+                api.invalidateQueries('BudgetList');
+            }
         }),
         updateBudget: builder.mutation({
             query: ({ budget_id, ...body }) => {
                 return {
-                url: `api/budgets/${budget_id}`,
-                body,
-                method: "PUT",
-                credentials: "include",
-            }},
+                    url: `api/budgets/${budget_id}`,
+                    body,
+                    method: "PUT",
+                    credentials: "include",
+                };
+            },
+            invalidatesTags: ['BudgetList'],
+            onSuccess: (data, variables, api) => {
+                api.invalidateQueries('BudgetList');
+            }
         }),
         deleteBudget: builder.mutation({
             query: (budget_id) => ({
@@ -38,16 +46,15 @@ export const budgetApi = createApi({
                 method: 'DELETE',
                 credentials: 'include',
             }),
-            invalidatesTags: (response, error, arg) => {
-                console.log({response, error, arg})
-                return [
-                    {type: 'budgets', id: 'MINE'},
-                    {type: 'budgets', id: budget_id}
-                ]
+            invalidatesTags: (result, error, arg) => {
+                if (!error && result) {
+                    return [{ type: 'BudgetList' }];
+                }
+                return null;
             }
         }),
     }),
-})
+});
 
-export const { useBudgetsQuery, useBudgetByIdQuery, useCreateBudgetMutation, useUpdateBudgetMutation, useDeleteBudgetMutation } = budgetApi
+export const { useBudgetsQuery, useBudgetByIdQuery, useCreateBudgetMutation, useUpdateBudgetMutation, useDeleteBudgetMutation } = budgetApi;
 export default budgetApi.reducer;

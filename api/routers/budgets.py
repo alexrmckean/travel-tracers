@@ -20,11 +20,10 @@ router = APIRouter()
 @router.post("/api/budgets", response_model=Union[BudgetOut, Error])
 def create_budget(
     budget: BudgetIn,
-    response: Response,
     repo: BudgetQueries = Depends(),
 ):
-    
     return repo.create(budget)
+
 
 @router.get("/api/budgets", response_model=Union[List[BudgetOut], Error])
 def get_all(
@@ -39,7 +38,10 @@ def update_budget(
     budget: BudgetIn,
     repo: BudgetQueries = Depends(),
 ) -> Union[Error, BudgetOut]:
-    return repo.update(budget_id, budget)
+    updated_budget = repo.update(budget_id, budget)
+    if updated_budget is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return updated_budget
 
 
 @router.delete("/api/budgets/{budget_id}", response_model=bool)
@@ -47,16 +49,18 @@ def delete_budget(
     budget_id: int,
     repo: BudgetQueries = Depends(),
 ) -> bool:
-    return repo.delete(budget_id)
+    deleted = repo.delete(budget_id)
+    if not deleted:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return True
 
 
 @router.get("/api/budgets/{budget_id}", response_model=Optional[BudgetOut])
 def get_one_budget(
     budget_id: int,
-    response: Response,
     repo: BudgetQueries = Depends(),
 ) -> BudgetOut:
     budget = repo.get_one(budget_id)
     if budget is None:
-        response.status_code = 404
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return budget
