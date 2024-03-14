@@ -16,8 +16,6 @@ export const store = configureStore({
         [itineraryApi.reducerPath]: itineraryApi.reducer,
         account: accountReducer,
         logout: logoutReducer,
-
-
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()

@@ -26,3 +26,8 @@
 .nav-item {
   margin-right: 10px; /* Adds spacing between the nav items */
 }
+
+.status-checked::after {
+  content: '✅';
+  font-size: 18px;
+}

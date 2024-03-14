@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useCreatePackingListMutation } from '../app/PackingSlice';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux' // Kept as per your request
+import { useNavigate } from 'react-router-dom' // Import useNavigate for redirection
+import { useCreatePackingListMutation } from '../app/PackingSlice'
 
 function PackingListForm() {
-    const dispatch = useDispatch();
-    const [item, setItem] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [category, setCategory] = useState('');
-    const [priority, setPriority] = useState('');
-    const [status, setStatus] = useState('');
-    const [notes, setNotes] = useState('');
-    const [deadline, setDeadline] = useState('');
-    const [createPackingList] = useCreatePackingListMutation();
+    const dispatch = useDispatch() // Kept as per your request, ensure it's used or consider removing it if unnecessary
+    const navigate = useNavigate() // Hook for redirection
+    const [item, setItem] = useState('')
+    const [quantity, setQuantity] = useState('')
+    const [category, setCategory] = useState('')
+    const [priority, setPriority] = useState('')
+    const [status, setStatus] = useState(false) // Initial state for status is false (unchecked)
+    const [notes, setNotes] = useState('')
+    const [deadline, setDeadline] = useState('')
+    const [createPackingList] = useCreatePackingListMutation()
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
-            await createPackingList({
+            // Execute the mutation
+            const result = await createPackingList({
                 item,
                 quantity,
                 category,
@@ -24,9 +27,12 @@ function PackingListForm() {
                 status,
                 notes,
                 deadline,
-            });
+            }).unwrap() // Using unwrap() to ensure proper error handling
+
+            // Assuming result is successful, redirect to '/api/packing_list'
+            navigate('/api/packing_list')
         } catch (error) {
-            console.error('Error creating Packing List', error);
+            console.error('Error creating Packing List:', error)
         }
     }
 
@@ -73,10 +79,10 @@ function PackingListForm() {
                 <div>
                     <label htmlFor="status">Status</label>
                     <input
-                        type="text"
+                        type="checkbox"
                         id="status"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
+                        checked={status} // Ensures the checkbox reflects the component state
+                        onChange={(e) => setStatus(e.target.checked)} // Correctly updates status
                     />
                 </div>
                 <div>
@@ -87,15 +93,15 @@ function PackingListForm() {
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
                     />
-                    <div>
-                        <label htmlFor="deadline">Deadline</label>
-                        <input
-                            type="date"
-                            id="deadline"
-                            value={deadline}
-                            onChange={(e) => setDeadline(e.target.value)}
-                        />
-                    </div>
+                </div>
+                <div>
+                    <label htmlFor="deadline">Deadline</label>
+                    <input
+                        type="date"
+                        id="deadline"
+                        value={deadline}
+                        onChange={(e) => setDeadline(e.target.value)}
+                    />
                 </div>
                 <button type="submit">Create List</button>
             </form>
@@ -103,4 +109,4 @@ function PackingListForm() {
     )
 }
 
-export default PackingListForm;
+export default PackingListForm

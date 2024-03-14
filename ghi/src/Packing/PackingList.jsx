@@ -1,63 +1,74 @@
+import React from 'react'
 import {
     usePackingListQuery,
-    useCreatePackingListMutation,
-    useUpdatePackingListMutation,
     useDeletePackingListMutation,
 } from '../app/PackingSlice'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import '../App.css';
 
 function DeleteButton({ packingListId }) {
-    const [deletePackingList] = useDeletePackingListMutation();
+    const [deletePackingList] = useDeletePackingListMutation()
 
     const handleDelete = async () => {
         try {
-            await deletePackingList(packingListId);
+            await deletePackingList(packingListId)
         } catch (error) {
-            console.error('Error deleting Packing List:', error);
+            console.error('Error deleting Packing List:', error)
         }
-    };
-    return <button onClick={handleDelete}>Delete</button>;
+    }
+
+    return <button onClick={handleDelete}>Delete</button>
 }
 
 function Packing() {
-    const { data: packingList = [] } = usePackingListQuery()
+    const { data: packingList = [] } = usePackingListQuery();
 
     return (
-        <div>
-            <h1>My Packing List</h1>
-            <ul>
-                {packingList.map((packingList) => (
-                    <div key={packingList.id}>
-                        <p>
-                            Item: {packingList.item}
-                            <div></div>
-                            Quantity: {packingList.quantity}
-                            <div></div>
-                            Category: {packingList.category}
-                            <div></div>
-                            Priority: {packingList.priority}
-                            <div></div>
-                            Status: {packingList.status}
-                            <div></div>
-                            Notes: {packingList.notes}
-                            <div></div>
-                            Deadline: {packingList.deadline}
-                            <div>
-                                <DeleteButton packingListId={packingList.id} />
+        <>
+            <div className="my-5 container">
+                <h1>My Packing List</h1>
+                <Link to="/api/packing_list/create/">
+                    <button>Create Packing List</button>
+                </Link>
+            </div>
+            <table className="table table-striped">
+                <thead className="thead-dark">
+                    <tr>
+                        <th>Item</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                        <th>Deadline</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {packingList.map((packingList) => (
+                        <tr key={packingList.id}>
+                            <td>{packingList.item}</td>
+                            <td>{packingList.category}</td>
+                            <td>{packingList.priority}</td>
+
+                            <td>
+                                {packingList.status ? 'Checked' : 'Unchecked'}
+                            </td>
+
+                            <td>{packingList.notes}</td>
+                            <td>{packingList.deadline}</td>
+                            <td>
                                 <Link
-                                    to={`/api/packing_list/${packingList.id}`}
+                                    to={`/api/packing_list/edit/${packingList.id}`}
                                 >
                                     <button>Edit</button>
                                 </Link>
-                            </div>
-                        </p>
-                    </div>
-                ))}
-            </ul>
-            <Link to="/api/packing_list/create/">
-                <button type="button">Create Packing List</button>
-            </Link>
-        </div>
+                                <DeleteButton packingListId={packingList.id} />
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </>
     )
 }
 
