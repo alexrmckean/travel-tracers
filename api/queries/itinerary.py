@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from datetime import date
+from datetime import date, timedelta, datetime, timezone
 from typing import List, Optional, Union
 
 class Error(BaseModel):
@@ -159,3 +159,15 @@ class ItineraryQueries:
             to_date=record[4],
             num_travelers=record[5],
         )
+
+
+    def get_weekly_calendar(self) -> List[List[Union[str, datetime]]]:
+        try:
+            today = datetime.now(timezone.utc).date()
+            start_of_week = today - timedelta(days=today.weekday())
+            end_of_week = start_of_week + timedelta(days=6)
+            date_range = [[(start_of_week + timedelta(days=i)).isoformat()] for i in range(7)]
+            return date_range
+        except Exception as e:
+            print(e)
+            return []

@@ -11,6 +11,10 @@ export const packingListApi = createApi({
             query: () => 'api/packing_list',
             providesTags: ['PackingList'],
         }),
+        packingListById: builder.query({
+            query: (packingList_id) => `api/packing_list/${packingList_id}`,
+            providesTags: (result, error, packingList_id) => [{ type: 'PackingList', packingList_id }],
+        }),
         createPackingList: builder.mutation({
             query: (body) => ({
                 url: '/api/packing_list',
@@ -57,5 +61,6 @@ export const {
     useCreatePackingListMutation,
     useUpdatePackingListMutation,
     useDeletePackingListMutation,
+    usePackingListByIdQuery,
 } = packingListApi;
 export default packingListApi.reducer;

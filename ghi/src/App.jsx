@@ -22,11 +22,13 @@ import EditBudgetForm from './Budget/EditBudgetForm'
 import EditItineraryForm from './Itinerary/EditItineraryForm';
 import BudgetDetails from './Budget/BudgetDetails';
 import ItineraryDetails from './Itinerary/ItineraryDetails';
-import AccommodationForm from './Accommodations/CreateAccommodaiton'
-import EditAccommodationForm from './Accommodations/EditAccommodationForm'
-import AccommodationDetails from './Accommodations/AccommodationsDetails'
-import EditPackingListForm from './Packing/EditPackingListForm'
-import PackingListDetails from './Packing/PackingListDetails'
+import AccommodationForm from './Accommodations/CreateAccommodaiton';
+import EditAccommodationForm from './Accommodations/EditAccommodationForm';
+import AccommodationDetails from './Accommodations/AccommodationsDetails';
+import EditPackingListForm from './Packing/EditPackingListForm';
+import PackingListDetails from './Packing/PackingListDetails';
+import Homepage from './homepage'
+Homepage
 
 function EditBudgetFormWrapper() {
     const { budget_id } = useParams() // Extract budget_id from URL
@@ -159,6 +161,10 @@ function App() {
                     <Route
                         path="/api/packing_list/:packingList_id"
                         element={<PackingListDetails />}
+                    />
+                    <Route
+                        path="/api/home"
+                        element={<Homepage />}
                     />
                 </Routes>
             </Router>

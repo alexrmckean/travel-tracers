@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useUpdateAccommodationsMutation } from '../app/AccommodationSlice';
-import { Link } from 'react-router-dom';
+import { useAccommodationsByIdQuery, useUpdateAccommodationsMutation } from '../app/AccommodationSlice';
+import { useNavigate } from 'react-router';
 
+function EditAccommodationForm({ accommodationId }) {
+    const navigate = useNavigate();
+    const [hotel, setHotel] = useState('');
+    const [flightNumber, setFlightNumber] = useState('');
+    const [flightNumber2, setFlightNumber2] = useState('');
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+    const [notes, setNotes] = useState('');
 
-function EditAccommodationForm({ accommodationId, initialData}) {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const [hotel, setHotel] = useState(initialData?.hotel || '');
-    const [flightNumber, setFlightNumber] = useState(initialData?.flight_number || '');
-    const [flightNumber2, setFlightNumber2] = useState(initialData?.flight_number_2 || '');
-    const [fromDate, setFromDate] = useState(initialData?.from_date || '');
-    const [toDate, setToDate] = useState(initialData?.to_date || '');
-    const [notes, setNotes] = useState(initialData?.notes || '');
+    const { data: initialData, isLoading, isError } = useAccommodationsByIdQuery(accommodationId);
 
-     useEffect(() => {
-        if (!initialData) {
-            // Fetch initial data from API using accommodationId
+    useEffect(() => {
+        if (initialData) {
+            setHotel(initialData.hotel);
+            setFlightNumber(initialData.flight_number);
+            setFlightNumber2(initialData.flight_number_2);
+            setFromDate(initialData.from_date);
+            setToDate(initialData.to_date);
+            setNotes(initialData.notes);
         }
-    }, [initialData, accommodationId]);
+    }, [initialData]);
 
-    const [createAccommodation] = useUpdateAccommodationsMutation();
+    const [updateAccommodation] = useUpdateAccommodationsMutation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createAccommodation({
+            await updateAccommodation({
                 accommodation_id: accommodationId,
                 hotel,
                 flight_number: flightNumber,
@@ -34,70 +38,87 @@ function EditAccommodationForm({ accommodationId, initialData}) {
                 to_date: toDate,
                 notes,
             });
+
+            navigate('/api/accommodations');
         } catch (error) {
             console.error('Error editing accommodation:', error);
         }
     }
 
+    if (isLoading) return <div className="text-center mt-8">Loading...</div>;
+    if (isError) return <div className="text-center mt-8">Error fetching data...</div>;
+
     return (
-        <div>
-            <h2>Edit an Accommodation</h2>
+        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4">Edit Accommodation</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor='hotel'>Hotel:</label>
+                <div className="mb-4">
+                    <label htmlFor="hotel" className="block text-gray-600 font-semibold mb-2">Hotel:</label>
                     <input
                         type="text"
                         id="hotel"
                         value={hotel}
                         onChange={e => setHotel(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div>
-                    <label htmlFor='flightNumber'>Flight Number:</label>
+                <div className="mb-4">
+                    <label htmlFor="flightNumber" className="block text-gray-600 font-semibold mb-2">Flight Number:</label>
                     <input
                         type="text"
                         id="flightNumber"
                         value={flightNumber}
-                        onChange={e => setFlightNumber(e.target.value)} required
+                        onChange={e => setFlightNumber(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </div>
-                <div>
-                    <label htmlFor='flightNumber2'>Flight Number 2:</label>
+                <div className="mb-4">
+                    <label htmlFor="flightNumber2" className="block text-gray-600 font-semibold mb-2">Flight Number 2:</label>
                     <input
                         type="text"
                         id="flightNumber2"
                         value={flightNumber2}
-                        onChange={e => setFlightNumber2(e.target.value)} required
+                        onChange={e => setFlightNumber2(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </div>
-                <div>
-                    <label htmlFor='fromDate'>From:</label>
+                <div className="mb-4">
+                    <label htmlFor="fromDate" className="block text-gray-600 font-semibold mb-2">From Date:</label>
                     <input
                         type="date"
                         id="fromDate"
                         value={fromDate}
-                        onChange={e => setFromDate(e.target.value)} required
+                        onChange={e => setFromDate(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </div>
-                <div>
-                    <label htmlFor='toDate'>To:</label>
+                <div className="mb-4">
+                    <label htmlFor="toDate" className="block text-gray-600 font-semibold mb-2">To Date:</label>
                     <input
                         type="date"
                         id="toDate"
                         value={toDate}
-                        onChange={e => setToDate(e.target.value)} required
+                        onChange={e => setToDate(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </div>
-                <div>
-                    <label htmlFor='notes'>Additional Notes:</label>
+                <div className="mb-4">
+                    <label htmlFor="notes" className="block text-gray-600 font-semibold mb-2">Additional Notes:</label>
                     <input
                         type="text"
                         id="notes"
                         value={notes}
                         onChange={e => setNotes(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                    <button type="submit">Update Accommodation</button>
+                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Update Accommodation
+                </button>
             </form>
         </div>
     );

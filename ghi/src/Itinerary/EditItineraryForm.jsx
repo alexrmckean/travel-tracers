@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useItineraryByIdQuery, useUpdateItineraryMutation } from '../app/ItinerarySlice';
 
-function EditItineraryForm({ itineraryId}) {
+function EditItineraryForm({ itineraryId }) {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [destination, setDestination] = useState('');
@@ -10,9 +10,9 @@ function EditItineraryForm({ itineraryId}) {
     const [toDate, setToDate] = useState('');
     const [numTravelers, setNumTravelers] = useState('');
 
-    const {data: initialData, isLoading, isError } = useItineraryByIdQuery(itineraryId);
+    const { data: initialData, isLoading, isError } = useItineraryByIdQuery(itineraryId);
 
-     useEffect(() => {
+    useEffect(() => {
         if (initialData) {
             setName(initialData.name);
             setDestination(initialData.destination);
@@ -47,55 +47,66 @@ function EditItineraryForm({ itineraryId}) {
     if (isError) return <div>Error fetching data...</div>;
 
     return (
-        <div>
-            <h2>Edit an Itinerary</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="max-w-md mx-auto mt-10">
+            <h2 className="text-2xl font-bold mb-4">Edit an Itinerary</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label htmlFor='name'>name:</label>
+                    <label htmlFor='name' className="block">Name:</label>
                     <input
                         type="text"
                         id="name"
                         value={name}
                         onChange={e => setName(e.target.value)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2"
                     />
                 </div>
                 <div>
-                    <label htmlFor='destination'>destination:</label>
+                    <label htmlFor='destination' className="block">Destination:</label>
                     <input
                         type="text"
                         id="destination"
                         value={destination}
-                        onChange={e => setDestination(e.target.value)} required
+                        onChange={e => setDestination(e.target.value)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        required
                     />
                 </div>
                 <div>
-                    <label htmlFor='fromDate'>From Date:</label>
+                    <label htmlFor='fromDate' className="block">From Date:</label>
                     <input
-                        type="Date"
+                        type="date"
                         id="fromDate"
                         value={fromDate}
-                        onChange={e => setFromDate(e.target.value)} required
+                        onChange={e => setFromDate(e.target.value)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        required
                     />
                 </div>
                 <div>
-                    <label htmlFor='toDate'>To Date:</label>
+                    <label htmlFor='toDate' className="block">To Date:</label>
                     <input
-                        type="Date"
+                        type="date"
                         id="toDate"
                         value={toDate}
-                        onChange={e => setToDate(e.target.value)} required
+                        onChange={e => setToDate(e.target.value)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        required
                     />
                 </div>
                 <div>
-                    <label htmlFor='numTravelers'>Number of Travelers:</label>
+                    <label htmlFor='numTravelers' className="block">Number of Travelers:</label>
                     <input
                         type="text"
                         id="numTravelers"
                         value={numTravelers}
-                        onChange={e => setNumTravelers(e.target.value)} required
+                        onChange={e => setNumTravelers(e.target.value)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        required
                     />
                 </div>
-                <button type="submit">Update Itinerary</button>
+                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Update Itinerary
+                </button>
             </form>
         </div>
     );

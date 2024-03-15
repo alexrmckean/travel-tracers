@@ -11,9 +11,15 @@ from queries.itinerary import (
     ItineraryQueries,
     Error,
 )
-from typing import Union, Optional, List
+from typing import Union, Optional, List ,List
+from datetime import datetime
 
 router = APIRouter()
+itinerary_queries = ItineraryQueries()
+
+@router.get("/api/itinerary/weekly_calendar", response_model=List[List[Union[str, datetime]]])
+def get_weekly_calendar():
+    return itinerary_queries.get_weekly_calendar()
 
 @router.post("/api/itinerary", response_model=Union[ItineraryOut, Error])
 def create_itinerary(

@@ -29,6 +29,7 @@ export const accommodationsApi = createApi({
         }),
         accommodations: builder.query({
             query: () => 'api/accommodations',
+            providesTags: ['AccommodationsList']
         }),
         accommodationsById: builder.query({
             query: (accommodation_id) => `api/accommodations/${accommodation_id}`,
@@ -44,18 +45,20 @@ export const accommodationsApi = createApi({
             invalidatesTags: ['AccommodationsList']
         }),
         updateAccommodations: builder.mutation({
-            query: ({ accommodation_id, ...body }) => {
-                return {
-                    url: `api/accommodations/${accommodation_id}`,
-                    body,
-                    method: 'PUT',
-                    credentials: 'include',
-                };
-            },
-            invalidatesTags: ['AccommodationsList'],
-             onSuccess: (data, variables, api) => {
-                api.invalidateQueries('AccomomodationsList');
-             }
+            query: ({ accommodation_id, ...body }) => ({
+                url: `api/accommodations/${accommodation_id}`,
+                body,
+                method: 'PUT',
+                credentials: 'include',
+            }),
+            invalidatesTags: (result, error, { accommodation_id }) => [
+                { type: 'AccommodationsList' },
+                { type: 'Accommodation', accommodation_id }
+            ],
+            onSuccess: (data, { accommodation_id }, api) => {
+                api.invalidateQueries('AccommodationsList');
+                api.invalidateQueries(['Accommodation', accommodation_id]);
+            }
         }),
         deleteAccommodations: builder.mutation({
             query: (accommodation_id) => ({
