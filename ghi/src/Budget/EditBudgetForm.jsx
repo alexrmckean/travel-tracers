@@ -9,7 +9,6 @@ function EditBudgetForm({ budgetId }) {
     const [date, setDate] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
 
-    // Fetch initial data from API using budgetId
     const { data: initialData, isLoading, isError } = useBudgetByIdQuery(budgetId);
 
     useEffect(() => {
@@ -33,57 +32,63 @@ function EditBudgetForm({ budgetId }) {
                 date,
                 payment_method: paymentMethod,
             });
-            // Navigate to the budget list page after successful update
             navigate('/api/budgets');
         } catch (error) {
             console.error('Error editing budget:', error);
         }
     }
 
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error fetching data...</div>;
+    if (isLoading) return <div className="text-center mt-8">Loading...</div>;
+    if (isError) return <div className="text-center mt-8">Error fetching data...</div>;
 
     return (
-        <div>
-            <h2>Edit a Budget</h2>
+        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md" >
+            <h2 className="text-2xl font-semibold mb-4">Edit a Budget</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor='description'>Description:</label>
+                <div className="mb-4">
+                    <label htmlFor='description' className="block text-gray-600 font-semibold mb-2">Description:</label>
                     <input
                         type="text"
                         id="description"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div>
-                    <label htmlFor='amount'>Amount:</label>
+                <div className="mb-4">
+                    <label htmlFor='amount' className="block text-gray-600 font-semibold mb-2">Amount:</label>
                     <input
                         type="text"
                         id="amount"
                         value={amount}
-                        onChange={e => setAmount(e.target.value)} required
+                        onChange={e => setAmount(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </div>
-                <div>
-                    <label htmlFor='date'>Date:</label>
+                <div className="mb-4">
+                    <label htmlFor='date' className="block text-gray-600 font-semibold mb-2">Date:</label>
                     <input
                         type="date"
                         id="date"
                         value={date}
-                        onChange={e => setDate(e.target.value)} required
+                        onChange={e => setDate(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </div>
-                <div>
-                    <label htmlFor='paymentMethod'>Payment Method:</label>
+                <div className="mb-4">
+                    <label htmlFor='paymentMethod' className="block text-gray-600 font-semibold mb-2">Payment Method:</label>
                     <input
                         type="text"
                         id="paymentMethod"
                         value={paymentMethod}
-                        onChange={e => setPaymentMethod(e.target.value)} required
+                        onChange={e => setPaymentMethod(e.target.value)}
+                        className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required
                     />
                 </div>
-                <button type="submit">Update Budget</button>
+                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">Update Budget</button>
             </form>
         </div>
     );
