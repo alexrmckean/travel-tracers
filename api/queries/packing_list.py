@@ -166,3 +166,5 @@ class PackingListQueries:
             notes=record[6],
             deadline=record[7],
         )
+
+
