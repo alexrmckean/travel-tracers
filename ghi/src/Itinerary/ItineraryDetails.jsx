@@ -1,14 +1,15 @@
 import React from 'react';
 import { useItineraryByIdQuery, useDeleteItineraryMutation } from '../app/ItinerarySlice';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 function DeleteButton({ itineraryId }) {
+    const navigate = useNavigate();
     const [deleteItinerary] = useDeleteItineraryMutation();
 
     const handleDelete = async () => {
         try {
             await deleteItinerary(itineraryId);
-            // After deletion, you can redirect the user to another page or perform any other actions as needed
+            navigate('/api/itinerary');
         } catch (error) {
             console.error('Error deleting itinerary:', error);
         }

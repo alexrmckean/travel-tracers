@@ -81,7 +81,6 @@ function EditAccommodationForm({ accommodationId }) {
                         value={flightNumber2}
                         onChange={e => setFlightNumber2(e.target.value)}
                         className="w-full p-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
                     />
                 </div>
                 <div className="mb-4">

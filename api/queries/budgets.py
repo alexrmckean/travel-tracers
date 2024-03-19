@@ -10,14 +10,14 @@ class Error (BaseModel):
 
 class BudgetIn(BaseModel):
     description: Optional[str]
-    amount: int
+    amount: float
     date: date
     payment_method: str
-  
+
 class BudgetOut(BaseModel):
     id: int
     description: Optional[str]
-    amount: int
+    amount: float
     date: date
     payment_method: str
 
