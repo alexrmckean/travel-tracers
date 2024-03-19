@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useItineraryQuery, useDeleteItineraryMutation } from '../app/ItinerarySlice';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 function DeleteButton({ itineraryId }) {
     const [deleteItinerary] = useDeleteItineraryMutation();
@@ -20,9 +21,9 @@ function DeleteButton({ itineraryId }) {
     );
 }
 
-function formatDate(dateString) {
+function formatDate(dateString, timeZone = 'UTC') {
     const date = new Date(dateString);
-    const options = { weekday: 'long', month: 'long', day: 'numeric' };
+    const options = { timeZone, weekday: 'long', month: 'long', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
 }
 
@@ -44,44 +45,60 @@ function Itinerary() {
 
     return (
         <>
-            <div className="my-5 container">
-                <h1 className="text-2xl font-bold mb-4">My Itinerary</h1>
-            </div>
-            <div className="grid grid-cols-7 gap-4">
+            <header className="py-2">
+                <div className="container pl-6">
+                    <h1 className="text-4xl">My Itinerary</h1>
+                    <p className="text-gray-500 mt-2">Plan your dream trip!</p>
+                    <div className="text-left mt-5">
+                        <Link to="/api/itinerary/create/">
+                            <button className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                                Add Trip
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+            </header>
+            <div className="grid grid-cols-7 p-5">
                 {weeklyCalendar.map((day, index) => (
-                    <div key={index} className="border border-gray-200 p-4 rounded">
+                    <div key={index} className="opacity=50 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                         {/* Access the date string inside the array */}
-                        <h2 className="text-lg font-semibold mb-2" style={{ fontSize: '1.1rem' }}>{formatDate(day[0])}</h2>
+                        <h2 className="bg-gray-800 text-white rounded-sm text-center text-md p-2" style={{ fontSize: '.9rem' }}>{formatDate(day[0])}</h2>
                         {itinerary
                             .filter(item => {
-                                const fromDate = new Date(item.from_date);
-                                const toDate = new Date(item.to_date);
-                                const currentDay = new Date(day[0]);
+                                const fromDate = moment(item.from_date).utcOffset('+00:00');
+                                const toDate = moment(item.to_date).utcOffset('+00:00');
+                                const currentDay = moment(day[0]).utcOffset('+00:00');
                                 return currentDay >= fromDate && currentDay <= toDate;
                             })
                             .map((item) => (
-                                <div key={item.id} className="bg-gray-100 p-4 rounded my-2">
-                                    <Link
-                                        to={`/api/itinerary/${item.id}`}
-                                        className="font-semibold mb-1 hover:text-blue-500"
-                                    >
-                                        {item.name}
-                                    </Link>
-                                    <p className="mb-1">Destination: {item.destination}</p>
-                                    <p className="mb-1">From: {formatDate(item.from_date)}</p>
-                                    <p className="mb-1">To: {formatDate(item.to_date)}</p>
-                                    <p className="mb-1">Travelers: {item.num_travelers}</p>
+                                <div key={item.id} className="bg-gray-50 text-white rounded-sm max-w-md">
+                                    <dl class="max-w-md divide-y divide-gray-200 text-gray-900 dark:text-white dark:divide-gray-700 p-2">
+                                        <img class="rounded-t-sm" src="https://image.cnbcfm.com/api/v1/image/106268734-1574876711571gettyimages-1059614218.jpeg?v=1576856860&w=630&h=354&ffmt=webp&vtcrop=y" alt="" />
+                                        <div class="flex flex-col pb-3">
+                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Trip Name:</dt>
+                                            <dd class="text-sm text-gray-500">{item.name}</dd>
+                                        </div>
+                                        <div class="flex flex-col pb-3">
+                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Destination:</dt>
+                                            <dd class="text-sm text-gray-500"> {item.destination}</dd>
+                                        </div>
+                                        <div class="flex flex-col py-3">
+                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Duration:</dt>
+                                            <dd class="text-sm text-gray-500">{formatDate(item.from_date)} - {formatDate(item.to_date)}</dd>
+                                        </div>
+                                        <div class="flex flex-col pt-3">
+                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Travelers:</dt>
+                                            <dd class="text-sm text-gray-500">{item.num_travelers}</dd>
+                                        </div>
+                                        <div class="flex flex-col pt-3">
+                                            <dt class="mb-1 text-gray-500 md:text-md dark:text-gray-400"></dt>
+                                            <dd class="text-sm font-semibold"> <Link to={`/api/itinerary/${item.id}`} className="underline hover:text-green-400">Trip Details</Link></dd>
+                                        </div>
+                                    </dl>
                                 </div>
                             ))}
                     </div>
                 ))}
-            </div>
-            <div className="max-w-md mx-auto mt-10">
-                <Link to="/api/itinerary/create/">
-                    <button className="bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-                        Create Itinerary
-                    </button>
-                </Link>
             </div>
         </>
     );

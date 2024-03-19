@@ -48,7 +48,7 @@ function EditItineraryForm({ itineraryId }) {
 
     return (
         <div className="max-w-md mx-auto mt-10">
-            <h2 className="text-2xl font-bold mb-4">Edit an Itinerary</h2>
+            <h2 className="text-2xl font-bold mb-4">Edit Itinerary</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor='name' className="block">Name:</label>

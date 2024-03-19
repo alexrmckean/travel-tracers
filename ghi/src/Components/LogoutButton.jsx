@@ -11,6 +11,7 @@ const LogoutButton = () => {
 
   return (
     <button onClick={handleLogout}>Logout</button>
+    
   );
 };
 

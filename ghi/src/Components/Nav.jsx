@@ -44,8 +44,9 @@ function Nav() {
             <div class="max-w-screen-xl px-0 py-0 pt-24 mx-auto">
                 <div class="flex items-left">
                         <div class="flex items-center space-x-6 rtl:space-x-reverse pl-4 pb-4">
-                            <a href="/api/login" class="text-sm  text-black dark:text-blue-500 hover:underline">Login</a>
-                            <a href="/api/signup" class="text-sm  text-black dark:text-blue-500 hover:underline">Sign Up</a>
+                            <a href="/api/signup" class="text-sm underline text-black dark:text-blue-500 hover:underline">Sign Up</a>
+                            <a href="/api/login" class="text-sm underline text-black dark:text-blue-500 hover:underline">Login</a>
+                            <a href="/api/logout" class="text-sm underline text-black dark:text-blue-500 hover:underline">Logout</a>
                         </div>
                 </div>
             </div>

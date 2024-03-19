@@ -40,21 +40,34 @@ function ItineraryDetails() {
 
     return (
         <div className="max-w-md mx-auto mt-10">
-            <h2 className="text-2xl font-bold mb-4">Itinerary Details</h2>
-            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <p className="font-semibold mb-2">Name: {itinerary.name}</p>
-                <p className="font-semibold mb-2">Destination: {itinerary.destination}</p>
-                <p className="font-semibold mb-2">From Date: {itinerary.from_date}</p>
-                <p className="font-semibold mb-2">To Date: {itinerary.to_date}</p>
-                <p className="font-semibold mb-2">Number of Travelers: {itinerary.num_travelers}</p>
-                <div className="flex">
-                    <Link to={`/api/itinerary/edit/${itinerary.id}`}>
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2">
+            <h2 className="text-center text-2xl font-semibold mb-4">Trip Details</h2>
+            <div className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4">
+                <dl class="max-w-md divide-y divide-gray-200 text-gray-900 dark:text-white dark:divide-gray-700 p-2">
+                    <div class="flex flex-col py-3">
+                        <dt class="mb-1 font-semibold md:text-md dark:text-gray-400">Trip Name:</dt>
+                        <dd class="text-sm text-gray-500 font-semibold">{itinerary.name}</dd>
+                    </div>
+                    <div class="flex flex-col py-3">
+                        <dt class="mb-1 font-semibold md:text-md dark:text-gray-400">Destination:</dt>
+                        <dd class="text-sm text-gray-500 font-semibold"> {itinerary.destination}</dd>
+                    </div>
+                    <div class="flex flex-col py-3">
+                        <dt class="mb-1 font-semibold md:text-md dark:text-gray-400">Duration:</dt>
+                        <dd class="text-sm text-gray-500 font-semibold">{itinerary.from_date} - {itinerary.to_date}</dd>
+                    </div>
+                    <div class="flex flex-col pt-3">
+                        <dt class="mb-1 font-semibold md:text-md dark:text-gray-400">Travelers:</dt>
+                        <dd class="text-sm text-gray-500 font-semibold pb-4">{itinerary.num_travelers}</dd>
+                    </div>
+                    <div className="pt-3">
+                        <Link to={`/api/itinerary/edit/${itinerary.id}`}>
+                            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-3 rounded mr-2">
                             Edit
-                        </button>
-                    </Link>
-                    <DeleteButton itineraryId={itinerary.id} />
-                </div>
+                            </button>
+                        </Link>
+                        <DeleteButton itineraryId={itinerary.id}/>
+                    </div>
+                </dl>
             </div>
         </div>
     );

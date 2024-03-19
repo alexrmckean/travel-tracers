@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import ErrorNotification from './ErrorNotification'
 import Construct from './Construct'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import Accommodations from './Accommodations/AccommodationsList'
 import Packing from './Packing/PackingList'
@@ -27,7 +27,9 @@ import EditAccommodationForm from './Accommodations/EditAccommodationForm';
 import AccommodationDetails from './Accommodations/AccommodationsDetails';
 import EditPackingListForm from './Packing/EditPackingListForm';
 import PackingListDetails from './Packing/PackingListDetails';
-import Homepage from './homepage'
+import Homepage from './homepage';
+
+
 Homepage
 
 function EditBudgetFormWrapper() {
@@ -108,7 +110,6 @@ function App() {
                         path="/api/accommodations"
                         element={<Accommodations />}
                     />
-                    <Route path="/api/login" element={<Login />} />
                     <Route path="/api/packing_list" element={<Packing />} />
                     <Route path="/api/budgets" element={<Budget />} />
                     <Route

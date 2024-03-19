@@ -18,34 +18,6 @@ function DeleteButton({ budgetId }) {
 
 function Budget() {
     const { data: budgets = [] } = useBudgetsQuery();
-    function DeleteButton({ budgetId }) {
-        const [deleteBudget] = useDeleteBudgetMutation();
-
-        const handleDelete = async () => {
-            try {
-                await deleteBudget(budgetId);
-
-            } catch (error) {
-                console.error('Error deleting budget:', error);
-            }
-        };
-
-        return <button onClick={handleDelete}>Delete</button>;
-    }
-    function DeleteButton({ budgetId }) {
-        const [deleteBudget] = useDeleteBudgetMutation();
-
-        const handleDelete = async () => {
-            try {
-                await deleteBudget(budgetId);
-
-            } catch (error) {
-                console.error('Error deleting budget:', error);
-            }
-        };
-
-        return <button onClick={handleDelete}>Delete</button>;
-    }
 
     return (
         <>
@@ -112,7 +84,7 @@ function Budget() {
                 </div>
             </div>
         </>
-       
+
     );
 
 
