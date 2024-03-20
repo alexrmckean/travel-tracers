@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLoginMutation } from '../app/AccommodationSlice';
+import { useLoginMutation } from '../app/AuthSlice';
 
 
 const Login = () => {

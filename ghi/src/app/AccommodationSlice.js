@@ -6,27 +6,6 @@ export const accommodationsApi = createApi({
         baseUrl: import.meta.env.VITE_API_HOST,
     }),
     endpoints: (builder) => ({
-        login: builder.mutation({
-            query: info => {
-                let formData = null;
-                if (info instanceof HTMLElement) {
-                    formData = new FormData(info);
-                } else {
-                    formData = new FormData();
-                    formData.append('username', info.username);
-                    formData.append('password', info.password);
-                }
-                return {
-                    url: '/token',
-                    method: 'POST',
-                    body: formData,
-                    credentials: 'include',
-                };
-            },
-            invalidatesTags: result => {
-                return (result && ['Account']) || [];
-            },
-        }),
         accommodations: builder.query({
             query: () => 'api/accommodations',
             providesTags: ['AccommodationsList']
@@ -74,20 +53,12 @@ export const accommodationsApi = createApi({
                 return null;
             }
         }),
-        getToken: builder.query({
-            query: () => ({
-                url: '/token',
-                credentials: 'include',
-            }),
-            providesTags: ['Account'],
-        }),
     }),
 });
 
 export const {
     useAccommodationsQuery,
     useAccommodationsByIdQuery,
-    useLoginMutation,
     useCreateAccommodationsMutation,
     useUpdateAccommodationsMutation,
     useDeleteAccommodationsMutation,

@@ -1,6 +1,10 @@
 import React from 'react';
 import { useBudgetsQuery, useDeleteBudgetMutation } from '../app/BudgetSlice';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useGetTokenQuery } from '../app/AuthSlice';
+import { useEffect, useState } from 'react';
+
 
 function DeleteButton({ budgetId }) {
     const [deleteBudget] = useDeleteBudgetMutation();
@@ -17,7 +21,25 @@ function DeleteButton({ budgetId }) {
 }
 
 function Budget() {
-    const { data: budgets = [] } = useBudgetsQuery();
+    const navigate = useNavigate();
+    const { data: token } = useGetTokenQuery();
+    const { data: budgets = [], error: budgetsError, isLoading: budgetsLoading } = useBudgetsQuery({}, {
+        skip: !token, // Skip fetching budgets until token is available
+        refetchOnMountOrArgChange: false // Prevent automatic refetching
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (token === undefined) {
+            return; // Wait until token is defined
+        }
+
+        if (!token) {
+            navigate('/api/login');
+        } else {
+            setLoading(false);
+        }
+    }, [token, navigate]);
 
     return (
         <>

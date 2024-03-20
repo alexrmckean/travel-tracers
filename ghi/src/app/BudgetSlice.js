@@ -4,15 +4,17 @@ export const budgetApi = createApi({
     reducerPath: 'budgets',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_HOST,
+        credentials: 'include',
     }),
     endpoints: (builder) => ({
         budgets: builder.query({
             query: () => 'api/budgets',
-            providesTags: ['BudgetList']
+            providesTags: ['BudgetList'],
         }),
         budgetById: builder.query({
             query: (budget_id) => `api/budgets/${budget_id}`,
             providesTags: (result, error, budget_id) => [{ type: 'Budget', budget_id }],
+            credentials: "include",
         }),
         createBudget: builder.mutation({
             query: (body) => ({

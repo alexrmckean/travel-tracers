@@ -13,6 +13,8 @@ from queries.budgets import (
     BudgetQueries,
 )
 from typing import Optional, Union, List
+from authenticator import authenticator
+
 
 router = APIRouter()
 
@@ -21,13 +23,18 @@ router = APIRouter()
 def create_budget(
     budget: BudgetIn,
     repo: BudgetQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+
 ):
+    print('Printing out id')
+    print(account_data["id"])
     return repo.create(budget)
 
 
 @router.get("/api/budgets", response_model=Union[List[BudgetOut], Error])
 def get_all(
     repo: BudgetQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.get_all()
 
