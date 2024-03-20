@@ -12,6 +12,7 @@ from queries.packing_list import (
     PackingListQueries,
 )
 from typing import Optional, Union, List
+from authenticator import authenticator
 
 router = APIRouter()
 
@@ -19,6 +20,7 @@ router = APIRouter()
 def create_packing_list(
     packing_list: PackingListIn,
     repo: PackingListQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     created_packing_list = repo.create(packing_list)
     if created_packing_list is None:
@@ -28,6 +30,7 @@ def create_packing_list(
 @router.get("/api/packing_list", response_model=Union[List[PackingListOut], Error])
 def get_all(
     repo: PackingListQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.get_all()
 

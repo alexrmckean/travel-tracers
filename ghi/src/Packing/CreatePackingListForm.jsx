@@ -1,43 +1,78 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCreatePackingListMutation } from '../app/PackingSlice';
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useCreatePackingListMutation } from '../app/PackingSlice'
+import { useGetTokenQuery } from '../app/AuthSlice'
+import {
+    usePackingListQuery,
+} from '../app/PackingSlice'
 
 function PackingListForm() {
-    const navigate = useNavigate();
-    const [item, setItem] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [category, setCategory] = useState('');
-    const [priority, setPriority] = useState('');
-    const [status, setStatus] = useState(false);
-    const [notes, setNotes] = useState('');
-    const [deadline, setDeadline] = useState('');
-    const [createPackingList] = useCreatePackingListMutation();
+    const navigate = useNavigate()
+    const { data: token } = useGetTokenQuery()
+    const {
+        data: packingList = [],
+        isLoading,
+        isError,
+    } = usePackingListQuery(
+        {},
+        {
+            skip: !token, // Skip fetching packing list until token is available
+            refetchOnMountOrArgChange: false, // Prevent automatic refetching
+        }
+    )
+    const [item, setItem] = useState('')
+    const [quantity, setQuantity] = useState('')
+    const [category, setCategory] = useState('')
+    const [priority, setPriority] = useState('')
+    const [status, setStatus] = useState(false)
+    const [notes, setNotes] = useState('')
+    const [deadline, setDeadline] = useState('')
+    const [createPackingList] = useCreatePackingListMutation()
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         try {
             const result = await createPackingList({
                 item,
                 quantity,
                 category,
                 priority,
-                checklist_status:status,
+                checklist_status: status,
                 notes,
                 deadline,
-            }).unwrap();
+            }).unwrap()
 
-            navigate('/api/packing_list');
+            navigate('/api/packing_list')
         } catch (error) {
-            console.error('Error creating Packing List:', error);
+            console.error('Error creating Packing List:', error)
         }
-    };
+    }
+
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        if (token === undefined) {
+            return // Wait until token is defined
+        }
+
+        if (!token) {
+            navigate('/api/login')
+        } else {
+            setLoading(false)
+        }
+    }, [token, navigate])
 
     return (
         <div className="max-w-md mx-auto mt-8 p-4 bg-white shadow-md rounded-md border">
             <h2 className="text-2xl font-bold mb-4">Create Packing List</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4">
-                    <label htmlFor="item" className="block text-sm font-medium text-gray-700">Item</label>
+                    <label
+                        htmlFor="item"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Item
+                    </label>
                     <input
                         type="text"
                         id="item"
@@ -47,7 +82,12 @@ function PackingListForm() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
+                    <label
+                        htmlFor="quantity"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Quantity
+                    </label>
                     <input
                         type="text"
                         id="quantity"
@@ -57,7 +97,12 @@ function PackingListForm() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+                    <label
+                        htmlFor="category"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Category
+                    </label>
                     <input
                         type="text"
                         id="category"
@@ -67,7 +112,12 @@ function PackingListForm() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="priority" className="block text-sm font-medium text-gray-700">Priority</label>
+                    <label
+                        htmlFor="priority"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Priority
+                    </label>
                     <input
                         type="text"
                         id="priority"
@@ -77,7 +127,12 @@ function PackingListForm() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status</label>
+                    <label
+                        htmlFor="status"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Status
+                    </label>
                     <input
                         type="checkbox"
                         id="status"
@@ -87,7 +142,12 @@ function PackingListForm() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="notes" className="block text-sm font-medium text-gray-700">Notes</label>
+                    <label
+                        htmlFor="notes"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Notes
+                    </label>
                     <input
                         type="text"
                         id="notes"
@@ -97,7 +157,12 @@ function PackingListForm() {
                     />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="deadline" className="block text-sm font-medium text-gray-700">Deadline</label>
+                    <label
+                        htmlFor="deadline"
+                        className="block text-sm font-medium text-gray-700"
+                    >
+                        Deadline
+                    </label>
                     <input
                         type="date"
                         id="deadline"
@@ -114,7 +179,7 @@ function PackingListForm() {
                 </button>
             </form>
         </div>
-    );
+    )
 }
 
-export default PackingListForm;
+export default PackingListForm
