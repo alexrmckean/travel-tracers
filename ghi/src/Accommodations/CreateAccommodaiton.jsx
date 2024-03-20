@@ -1,8 +1,7 @@
-// AccommodationForm.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCreateAccommodationsMutation } from '../app/AccommodationSlice';
 import { useNavigate } from 'react-router';
+import { useGetTokenQuery } from '../app/AuthSlice';
 
 function AccommodationForm() {
     const navigate = useNavigate();
@@ -13,6 +12,17 @@ function AccommodationForm() {
     const [toDate, setToDate] = useState('');
     const [notes, setNotes] = useState('');
     const [createAccommodations] = useCreateAccommodationsMutation();
+    const { data: token } = useGetTokenQuery();
+
+    useEffect(() => {
+        if (token === undefined) {
+            return;
+        }
+
+        if (!token) {
+            navigate('/api/login');
+        }
+    }, [token, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

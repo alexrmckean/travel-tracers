@@ -4,6 +4,7 @@ export const accommodationsApi = createApi({
     reducerPath: 'accommodations',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_HOST,
+        credentials: "include",
     }),
     endpoints: (builder) => ({
         accommodations: builder.query({
@@ -13,6 +14,7 @@ export const accommodationsApi = createApi({
         accommodationsById: builder.query({
             query: (accommodation_id) => `api/accommodations/${accommodation_id}`,
             providesTags: (result, error, accommodation_id) => [{ type: 'Accommodation', accommodation_id }],
+            credentials: "include",
         }),
         createAccommodations: builder.mutation({
             query: (body) => ({

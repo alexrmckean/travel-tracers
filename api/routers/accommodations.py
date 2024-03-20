@@ -15,6 +15,7 @@ from queries.accommodations import (
 )
 
 from typing import Optional, Union, List
+from authenticator import authenticator
 
 
 router = APIRouter()
@@ -24,6 +25,7 @@ router = APIRouter()
 def create_accommodations(
     accommodations: AccommodationsIn,
     repo: AccommodationsQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.create(accommodations)
 
@@ -43,6 +45,8 @@ def get_one_accommodations(
 @router.get("/api/accommodations", response_model=Union[List[AccommodationsOut], Error])
 def get_all(
     repo: AccommodationsQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+
 ):
     return repo.get_all()
 

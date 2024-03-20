@@ -1,5 +1,8 @@
 import { useAccommodationsQuery, useDeleteAccommodationsMutation } from '../app/AccommodationSlice';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useGetTokenQuery } from '../app/AuthSlice';
+import { useEffect, useState } from 'react';
 
 function DeleteButton({ accommodationId }) {
     const [deleteAccommodation] = useDeleteAccommodationsMutation();
@@ -20,7 +23,26 @@ function DeleteButton({ accommodationId }) {
 }
 
 function Accommodations() {
-    const { data: accommodations = [] } = useAccommodationsQuery();
+    const navigate = useNavigate();
+    const { data: token } = useGetTokenQuery();
+    const { data: accommodations = [], error: accommodationsError, isLoading: accommodationsLoading } = useAccommodationsQuery({}, {
+        skip: !token,
+        refetchOnMountOrArgChange: false
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (token === undefined) {
+            return; 
+        }
+
+        if (!token) {
+            navigate('/api/login');
+        } else {
+            setLoading(false);
+        }
+    }, [token, navigate]);
+
 
     return (
         <div>
