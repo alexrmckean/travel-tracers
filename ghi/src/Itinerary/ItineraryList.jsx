@@ -72,27 +72,27 @@ function Itinerary() {
                             })
                             .map((item) => (
                                 <div key={item.id} className="bg-gray-50 text-white rounded-sm max-w-md">
-                                    <dl class="max-w-md divide-y divide-gray-200 text-gray-900 dark:text-white dark:divide-gray-700 p-2">
-                                        <img class="rounded-t-sm" src="https://image.cnbcfm.com/api/v1/image/106268734-1574876711571gettyimages-1059614218.jpeg?v=1576856860&w=630&h=354&ffmt=webp&vtcrop=y" alt="" />
-                                        <div class="flex flex-col pb-3">
-                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Trip Name:</dt>
-                                            <dd class="text-sm text-gray-500">{item.name}</dd>
+                                    <dl className="max-w-md divide-y divide-gray-200 text-gray-900 dark:text-white dark:divide-gray-700 p-2">
+                                        <img className="rounded-t-sm" src="https://image.cnbcfm.com/api/v1/image/106268734-1574876711571gettyimages-1059614218.jpeg?v=1576856860&w=630&h=354&ffmt=webp&vtcrop=y" alt="" />
+                                        <div className="flex flex-col pb-3">
+                                            <dt className="mb-1 md:text-sm dark:text-gray-400 font-semibold">Trip Name:</dt>
+                                            <dd className="text-sm text-gray-500">{item.name}</dd>
                                         </div>
-                                        <div class="flex flex-col pb-3">
-                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Destination:</dt>
-                                            <dd class="text-sm text-gray-500"> {item.destination}</dd>
+                                        <div className="flex flex-col pb-3">
+                                            <dt className="mb-1 md:text-sm dark:text-gray-400 font-semibold">Destination:</dt>
+                                            <dd className="text-sm text-gray-500"> {item.destination}</dd>
                                         </div>
-                                        <div class="flex flex-col py-3">
-                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Duration:</dt>
-                                            <dd class="text-sm text-gray-500">{formatDate(item.from_date)} - {formatDate(item.to_date)}</dd>
+                                        <div className="flex flex-col py-3">
+                                            <dt className="mb-1 md:text-sm dark:text-gray-400 font-semibold">Duration:</dt>
+                                            <dd className="text-sm text-gray-500">{formatDate(item.from_date)} - {formatDate(item.to_date)}</dd>
                                         </div>
-                                        <div class="flex flex-col pt-3">
-                                            <dt class="mb-1 md:text-sm dark:text-gray-400 font-semibold">Travelers:</dt>
-                                            <dd class="text-sm text-gray-500">{item.num_travelers}</dd>
+                                        <div className="flex flex-col pt-3">
+                                            <dt className="mb-1 md:text-sm dark:text-gray-400 font-semibold">Travelers:</dt>
+                                            <dd className="text-sm text-gray-500">{item.num_travelers}</dd>
                                         </div>
-                                        <div class="flex flex-col pt-3">
-                                            <dt class="mb-1 text-gray-500 md:text-md dark:text-gray-400"></dt>
-                                            <dd class="text-sm font-semibold"> <Link to={`/api/itinerary/${item.id}`} className="underline hover:text-green-400">Trip Details</Link></dd>
+                                        <div className="flex flex-col pt-3">
+                                            <dt className="mb-1 text-gray-500 md:text-md dark:text-gray-400"></dt>
+                                            <dd className="text-sm font-semibold"> <Link to={`/api/itinerary/${item.id}`} className="underline hover:text-green-400">Trip Details</Link></dd>
                                         </div>
                                     </dl>
                                 </div>

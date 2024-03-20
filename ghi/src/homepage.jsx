@@ -20,7 +20,7 @@ function Homepage() {
 
     return (
         <div>
-            <div id="animation-carousel" className="relative w-full" data-carousel="slide">
+            <div id="animation-carousel-1" className="relative w-full" data-carousel="slide">
                 <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
                     {carouselItems.map((item, index) => (
                         <div key={index} className={`duration-300 ease-linear ${index === currentItemIndex ? 'opacity-100' : 'opacity-0'}`} data-carousel-item={index === currentItemIndex ? 'active' : ''}>
@@ -39,7 +39,7 @@ function Homepage() {
             </header>
 
             {/* Main Content */}
-            <main className="container mx-auto mt-8 bg-gray 700">
+            <main className="container mx-auto mt-8 bg-gray-700">
                 {/* About Section */}
                 <div className="flex">
                     {/* About Section */}
@@ -47,7 +47,7 @@ function Homepage() {
                         <section className="mb-8">
                             <h2 className="text-2xl font-bold mb-4 text-4xl pt-24 pl-24">All of Your Travel Plans in One Place</h2>
                             <p className="text-gray-700 leading-relaxed text-2xl pl-24">
-                                Welcome to Travel Tracer, your all-in-one destination for planning your next adventure. <br /> Easily explore and organize your travel plans with our intuitive platform, <br /> ensuring a seamless journey from start to finish!
+                                Welcome to Travel Tracer, your all-in-one destination for planning your next adventure. <br /> Easily explore and organize your travel plans with our intuitive platform, ensuring a seamless journey from start to finish!
                             </p>
                         </section>
                     </div>
@@ -57,20 +57,19 @@ function Homepage() {
                         <section className="mb-8">
                             <h2 className="font-bold mb-4 pl-48 text-4xl pt-4">Travel Tracer Essential Tools:</h2>
                             <ul className="list-disc list-inside text-gray-700 text-2xl pl-40 ">
-                                🧭 ITINERARY: plan and organize your trips hassle-free<br></br>
-                                🧳 ATTRACTIONS: discover popular destinations worldwide<br></br>
-                                🧭 WEATHER: Stay informed about the weather forecast for your trip<br></br>
-                                🧳 RESTAURANTS: Find nearby dining options to suit your tastes<br></br>
-                                🧭 HOTEL INFO: Store important hotel details for convenient reference<br></br>
-                                🧳 BUDGET TRACKER: Manage your travel expenses efficiently<br></br>
-                                🧭 PACKING LIST: Create and maintain a packing list to ensure nothing is forgotten.
+                                <li>🧭 ITINERARY: plan and organize your trips hassle-free</li>
+                                <li>🧳 ATTRACTIONS: discover popular destinations worldwide</li>
+                                <li>🧭 WEATHER: Stay informed about the weather forecast for your trip</li>
+                                <li>🧳 RESTAURANTS: Find nearby dining options to suit your tastes</li>
+                                <li>🧭 HOTEL INFO: Store important hotel details for convenient reference</li>
+                                <li>🧳 BUDGET TRACKER: Manage your travel expenses efficiently</li>
+                                <li>🧭 PACKING LIST: Create and maintain a packing list to ensure nothing is forgotten.</li>
                             </ul>
                         </section>
                     </div>
                 </div>
 
-
-                <section className="bg-center bg-no-repeat bg-[url('https://images.inc.com/uploaded_files/image/1920x1080/getty_583734066_335273.jpg')] bg-gray-700 bg-blend-multiply">
+                <section className="bg-center bg-no-repeat bg-gray-700 bg-blend-multiply">
                     <div className="px-4 mx-auto max-w-screen-xl text-center py-10 lg:py-15">
                         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Start Your Journey Planning Today!</h1>
                         <p className="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">Ready to start planning your next adventure? Sign up now and explore the world like never before!</p>
@@ -84,50 +83,39 @@ function Homepage() {
                         </div>
                     </div>
                 </section>
-                {/* THIS CAN BE REMOVED IF WE DON'T WANT IT, OR IT CAN BE A STRETCH GOAL TO GET IT ACTUALLY FUNCTIONING, RIGHT NOW IT'S JUST FOR LOOKS */}
-                <article class="pl-10 pr-10">
-                    <div class="flex items-center mb-4 pt-10">
-                        <img class="w-10 h-10 me-4 rounded-full" src="https://media.istockphoto.com/id/1018999828/vector/default-avatar-profile-icon-grey-photo-placeholder.jpg?s=612x612&w=0&k=20&c=7iGKJMFn8CBKsrLq_ISKI7vHdgh3VWs4QpZbDPl7ehI=" alt=""/>
-                        <div class="font-medium dark:text-white">
-                            <p>Tootsie Mcgee<time datetime="2014-08-16 19:00" class="block text-sm text-gray-500 dark:text-gray-400">Joined on January 2024</time></p>
+
+                <article className="pl-10 pr-10">
+                    <div className="flex items-center mb-4 pt-10">
+                        <img className="w-10 h-10 me-4 rounded-full" src="https://media.istockphoto.com/id/1018999828/vector/default-avatar-profile-icon-grey-photo-placeholder.jpg?s=612x612&w=0&k=20&c=7iGKJMFn8CBKsrLq_ISKI7vHdgh3VWs4QpZbDPl7ehI=" alt=""/>
+                        <div className="font-medium dark:text-white">
+                            <p>Tootsie Mcgee<time dateTime="2014-08-16 19:00" className="block text-sm text-gray-500 dark:text-gray-400">Joined on January 2024</time></p>
                         </div>
                     </div>
-                    <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
-                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <div className="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
+                        <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <h3 class="ms-2 text-sm font-semibold text-gray-900 dark:text-white">Gotta use it whenever I travel!</h3>
                     </div>
-                    <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400"><p>Reviewed in the United States on <time datetime="2017-03-03 19:00">March 3, 2024</time></p></footer>
-                    <p class="mb-2 text-gray-500 dark:text-gray-400">If you aren't using Travel Tracer to organize your trips you're really missing out! I can keep track of my travels, what I need to pack, hotels, makr my spending while I'm out and about having fun at just a push of a few buttons. A must have if traveling with kids, I can mark the most important packing items as priority so they're there at the top of my list. No more forgotten toothbrushes!</p>
-                    <p class="mb-3 text-gray-500 dark:text-gray-400">I'm really telling you, Travel Tracer has it all. Give it a go, you won't regret it next time you travel!</p>
-                    <a href="#" class="block mb-5 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">Read more</a>
-                    <aside>
-                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">19 people found this helpful</p>
-                        <div class="flex items-center mt-3">
-                            <a href="#" class="px-2 py-1.5 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Helpful</a>
-                            <a href="#" class="ps-4 text-sm font-medium text-blue-600 hover:underline dark:text-blue-500 border-gray-200 ms-4 border-s md:mb-0 dark:border-gray-600">Report abuse</a>
-                        </div>
-                    </aside>
+                    <p className="text-gray-700 text-2xl font-medium dark:text-gray-300">This is an amazing platform! I've been using Travel Tracer for a few months now, and it has made organizing my trips so much easier. Highly recommended!</p>
                 </article>
             </main>
 
             {/* Footer */}
-            <footer className="bg-gray-200 py-4 mt-8 left-0 w-full">
+            <footer className="bg-sky-900 py-4 mt-20">
                 <div className="container mx-auto text-center">
-                    <p className="text-gray-600">© 2024 Your Travel App. All rights reserved.</p>
+                    <p className="text-white">© 2024 Travel Tracer. All rights reserved.</p>
                 </div>
             </footer>
         </div>
