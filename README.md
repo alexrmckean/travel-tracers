@@ -1,172 +1,289 @@
-# Module3 Project Gamma
+# Travel Tracer
+Welcome to Travel Tracer, your ultimate companion for managing all your travel needs! From itinerary planning to budget tracking, packing lists, and accommodations, Travel Tracer has got you covered. Say goodbye to travel stress and hello to seamless journeys with Travel Tracer!
 
-## Getting started
+Team:
 
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
+* William Reeves
+* Ben Austin
+* Alex McKean
+* Justin Ryu
+* Kaitlyn Padermos
 
-## Install Extensions
+## Getting Started
 
--   Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
--   Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
+**Make sure you have Docker, Git, and Node.js Bullseye or above**
 
-## Deliverables
+1. Fork this repository.
 
--   [ ] Wire-frame diagrams
--   [ ] API documentation
--   [ ] Project is deployed to Caprover (BE, DB) & GitLab-pages (FE)
--   [ ] GitLab issue board is setup and in use (or project management tool of choice)
--   [ ] Journals
+2. Clone the forked repository onto your local computer:
+git clone <https://gitlab.com/travel-tracers/travel-tracers-gamma.git>
 
-## Project layout
+3. Build and run the project using Docker with these commands:
+```
+docker-compose build
+docker-compose up
+```
+- After running these commands, make sure all of your Docker containers are running
 
-The layout of the project is just like all of the projects
-you did with `docker-compose` in module #2. You will create
-a directory in the root of the repository for each service
-that you add to your project just like those previous
-projects were setup.
+- View the project in the browser: http://localhost:5173/
 
-### Directories
+![Img](/ghi/src/images/Homepage.png)
+![Img](/ghi/src/images/Itinerary.png)
 
-Several directories have been added to your project. The
-directories `docs` and `journals` are places for you and
-your team-mates to, respectively, put any documentation
-about your project that you create and to put your
-project-journal entries. See the _README.md_ file in each
-directory for more info.
+## Design
 
-The other directories, `ghi` and `api`, are services, that
-you can start building off of.
+Travel Tracer is a monolithic application made up of 5 models which work together to help you keep track during your travels.
 
-Inside of `ghi` is a minimal React app that has an "under construction" page.
-This app is written using the [Vite](https://vitejs.dev/) bundler. The example
-code is also using [jsdoc](https://jsdoc.app/) to provide type hints for
-JavaScript. You are not required to use JSDoc yourself, and you will be removing
-these examples and providing your own code for `App.jsx`
+- **Account**
+- **Itinerary**
+- **Budget**
+- **Packing List**
+- **Accommodations**
 
-Inside of `api` is a minimal FastAPI application.
-"Where are all the files?" you might ask? Well, the
-`main.py` file is the whole thing, and go take look inside
-of it... There's not even much in there..., hmm? That is
-FastAPI, we'll learn more about it in the coming days. Can
-you figure out what this little web-application does even
-though you haven't learned about FastAPI yet?
+## Diagram
 
-Also in `api` is a directory for your migrations.
-If you choose to use PostgreSQL, then you'll want to use
-migrations to control your database. Unlike Django, where
-migrations were automatically created for you, you'll write
-yours by hand using DDL. Don't worry about not knowing what
-DDL means; we have you covered. There's a sample migration
-in there that creates two tables so you can see what they
-look like.
+![Img](/ghi/src/images/Wireframe.png)
 
-The Dockerfile and Dockerfile.dev run your migrations
-for you automatically.
+## Integration - Value Objects
 
-### Installing python dependencies locally
+Our Account, Itinerary, Budget, Packing List, and Accommodations models work together to make everything here at **Travel Tracer** possible.
 
-In order for VSCode's built in code completion and intelligence to
-work correctly, it needs the dependencies from the requirements.txt file
-installed. We do this inside docker, but not in the workspace.
+## Account model, a brief intro
 
-So we need to create a virtual environment and pip install the requirements.
+The account model allows us to have data that is only accessible after a user has signed up and logged in. An account will have the attributes of:
+- id
+- email
+- password
+- fullname
 
-From inside the `api` folder:
+## Itinerary model, a brief intro
 
-```bash
-python -m venv .venv
+The itinerary model will show details of a week-long travel itinerary. An Itinerary will have the attributes of:
+- id
+- name
+- destination
+- from_date
+- to_date
+- num_travelers
+
+## Budget model, a brief intro
+
+The budget model will show details of a budget in the form of a table. A budget will have the attributes of:
+- id
+- description
+- amount
+- date
+- payment_method
+
+## Packing List model, a brief intro
+
+
+The packing list model will show a list of packing list items.  A packing list will have the attributes of:
+- id
+- item
+- quantity
+- category
+- priority
+- checklist_status
+- notes
+- deadline
+
+## Accommodations model, a brief intro
+
+
+The accommodations model will show a list of accommodations.  An accommodation will have the attributes of:
+- id
+- hotel
+- flight_number
+- flight_number_2
+- from_date
+- to_date
+- notes
+
+
+
+## Accessing Endpoints to Send and View Data: Access Through FastAPI Swagger & Your Browser
+
+
+## Account model
+Method | URL | What it does
+| ------ | ------ | ------ |
+GET | localhost:5173/token | Get token
+POST | localhost:5173/token | Login
+DELETE | localhost:5173/token | Logout
+POST | localhost:5173/api/accounts | Create Account
+
+
+
+JSON Body to input into FastAPI Swagger:
+Create an account (SEND THIS JSON BODY):
+
+```
+{
+  "email": "spoon@gmail.com",
+  "password": "spoons 4lyfe",
+  "full_name": "Spoon Jones"
+}
+
 ```
 
-Then activate the virtual environment
+Creating an account return value:
 
-```bash
-source .venv/bin/activate
+```
+{
+  "access_token": "asdfghjkl76543wasxdcfghjkjuytredsfghjbvcdfghyjk7654edfgh",
+  "token_type": "Bearer",
+  "account": {
+    "id": "1",
+    "email": "spoon@gmail.com",
+    "full_name": "Spoon Jones"
+  }
+}
+
 ```
 
-And finally install the dependencies
+## Itinerary model
+Method | URL | What it does
+| ------ | ------ | ------ |
+GET | localhost:5173/itinerary | Get All
+GET | localhost:5173/itinerary/{id} | Get Itinerary
+GET | localhost:5173/itinerary/weekly_calendar | Get Weekly Calendar
+POST | localhost:5173/itinerary | Create Itinerary
+DELETE | localhost:5173/itinerary/{id} | Delete Itinerary
+PUT | localhost:5173/api/itinerary/{id} | Update Itinerary
 
-```bash
-pip install -r requirements.txt
+JSON Body to input into FastAPI Swagger:
+Create an itinerary (SEND THIS JSON BODY):
+
+```
+{
+  "name": "Birthday Trip",
+  "destination": "New York City",
+  "from_date": "2024-03-21",
+  "to_date": "2024-03-25",
+  "num_travelers": "5"
+}
+
+```
+Creating an itinerary return value:
+```
+{
+  "id": 1,
+  "name": "Birthday Trip",
+  "destination": "New York City",
+  "from_date": "2024-03-21",
+  "to_date": "2024-03-25",
+  "num_travelers": "5"
+}
+
 ```
 
-Then make sure the venv is selected in VSCode by checking the lower right of the
-VSCode status bar
+## Budget model
+Method | URL | What it does
+| ------ | ------ | ------ |
+GET | localhost:5173/budgets | Get All
+GET | localhost:5173/budgets/{budget_id} | Get One Budget
+POST | localhost:5173/budgets | Create Budget
+DELETE | localhost:5173/budgets/{budget_id} | Delete Budget
+PUT | localhost:5173/api/budgets/{budget_id} | Update Budget
 
-### Other files
+JSON Body to input into FastAPI Swagger:
+Create a budget (SEND THIS JSON BODY):
 
-The following project files have been created as a minimal
-starting point. Please follow the guidance for each one for
-a most successful project.
+```
+{
+  "description": "Birthday Hat",
+  "amount": 10.00,
+  "date": "2024-03-21",
+  "payment_method": "Credit Card"
+}
 
--   `docker-compose.yaml`: there isn't much in here, just a
-    **really** simple UI and FastAPI service. Add services
-    (like a database) to this file as you did with previous
-    projects in module #2.
--   `.gitlab-ci.yml`: This is your "ci/cd" file where you will
-    configure automated unit tests, code quality checks, and
-    the building and deployment of your production system.
-    Currently, all it does is deploy an "under construction"
-    page to your production UI on GitLab and a sample backend
-    to CapRover. We will learn much more about this file.
--   `.gitignore`: This is a file that prevents unwanted files
-    from getting added to your repository, files like
-    `pyc` files, `__pycache__`, etc. We've set it up so that
-    it has a good default configuration for Python projects.
--   `.env.sample`: This file is a template to copy when
-    creating environment variables for your team. Create a
-    copy called `.env` and put your own passwords in here
-    without fear of it being committed to git (see `.env`
-    listed in `.gitignore`). You can also put team related
-    environment variables in here, things like api and signing
-    keys that shouldn't be committed; these should be
-    duplicated in your deployed environments.
+```
+Creating a budget return value:
 
-## How to complete the initial deploy
+```
+{
+  "id": 1,
+  "description": "Birthday Hat",
+  "amount": 10.00,
+  "date": "2024-03-21",
+  "payment_method": "Credit Card"
+}
+```
 
-There will be further guidance on completing the initial
-deployment, but it just consists of these steps:
+## Packing List model
+Method | URL | What it does
+| ------ | ------ | ------ |
+GET | localhost:5173/packing_list | Get All
+GET | localhost:5173/packing_list/{packing_list_id} | Get One Packing List
+POST | localhost:5173/packing_list | Create Packing List
+DELETE | localhost:5173/packing_list/{packing_list_id} | Delete Packing List
+PUT | localhost:5173/api/packing_list/{packing_list_id} | Update Packing List
 
-### Setup GitLab repo/project
+JSON Body to input into FastAPI Swagger:
+Create a packing list (SEND THIS JSON BODY):
+```
+{
+  "item": "Birthday Candles",
+  "quantity": 30,
+  "category": "Party Supplies",
+  "priority": 1,
+  "checklist_status": false,
+  "notes": "Don’t forget the candles!",
+  "deadline": "2024-03-21"
+}
+```
+Creating a packing list return value:
+```
+{
+  "id": 1,
+  "item": "Birthday Candles",
+  "quantity": 30,
+  "category": "Party Supplies",
+  "priority": 1,
+  "checklist_status": false,
+  "notes": "Don’t forget the candles!",
+  "deadline": "2024-03-21"
+}
+```
 
--   make sure this project is in a group. If it isn't, stop
-    now and move it to a GitLab group
--   remove the fork relationship: In GitLab go to:
+## Accommodations model
+Method | URL | What it does
+| ------ | ------ | ------ |
+GET | localhost:5173/accommodations | Get All
+GET | localhost:5173/accommodations/{accommodations_id} | Get One Accommodations
+POST | localhost:5173/accommodations | Create Accommodations
+DELETE | localhost:5173/accommodations/{accommodations_id} | Delete Accommodations
+PUT | localhost:5173/api/accommodations/{accommodations_id} | Update Accommodations
 
-    Settings -> General -> Advanced -> Remove fork relationship
+JSON Body to input into FastAPI Swagger:
+Create a accommodation (SEND THIS JSON BODY):
 
--   add these GitLab CI/CD variables:
-    -   PUBLIC_URL : this is your gitlab pages URL
-    -   VITE_APP_API_HOST: enter "blank" for now
+```
+{
+  "hotel": "Hilton",
+  "flight_number": "B3453",
+  "flight_number_2": "B2345",
+  "from_date": "2024-03-21",
+  "to_date": "2024-03-25",
+  "notes": "Get to the airport early!"
+}
 
-#### Your GitLab pages URL
+```
+Creating a accommodation return value:
+```
+{
+  "id": 1,
+  "hotel": "Hilton",
+  "flight_number": "B3453",
+  "flight_number_2": "B2345",
+  "from_date": "2024-03-21",
+  "to_date": "2024-03-25",
+  "notes": "Get to the airport early!"
+}
 
-You can't find this in GitLab until after you've done a deploy
-but you can figure it out yourself from your GitLab project URL.
+```
 
-If this is your project URL
+On the backend, the Travel Tracer application has 5 models: Account, Itinerary, Budget, Packing List, and Accommodations.
 
-https://gitlab.com/GROUP_NAME/PROJECT_NAME
-
-then your GitLab pages URL will be
-
-https://GROUP_NAME.gitlab.io/PROJECT_NAME
-
-### Initialize CapRover
-
-1. Attain IP address and domain from an instructor
-1. Follow the steps in the CD Cookbook in Learn.
-
-### Update GitLab CI/CD variables
-
-Copy the service URL for your CapRover service and then paste
-that into the value for the REACT_APP_API_HOST CI/CD variable
-in GitLab.
-
-### Deploy it
-
-Merge a change into main to kick off the initial deploy. Once the build pipeline
-finishes you should be able to see an "under construction" page on your GitLab
-pages site.
+On the backend, Travel Tracer comprises 5 models—Account, Itinerary, Budget, Packing List, and Accommodations—each serving a unique purpose to keep users organized during their travels.
