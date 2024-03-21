@@ -25,7 +25,6 @@ class AccommodationsQueriesMock:
         },
     ]
 
-
 def test_get_all():
 
     app.dependency_overrides[AccommodationsQueries] = AccommodationsQueriesMock
