@@ -2,6 +2,7 @@ from fastapi.testclient import TestClient
 from main import app
 from queries.packing_list import PackingListQueries
 from datetime import date
+from authenticator import authenticator
 
 
 client = TestClient(app=app)
@@ -21,10 +22,16 @@ class FakePackingListQueries:
             },
         ]
 
+def fakeAccountData():
+    return {
+        "id": 1,
+        "email": "string@string.com",
+    }
 
 def test_get_all():
         #Arrange
         app.dependency_overrides[PackingListQueries] = FakePackingListQueries
+        app.dependency_overrides[authenticator.get_current_account_data] = (fakeAccountData)
         #Act
         res = client.get("/api/packing_list")
         data = res.json()
