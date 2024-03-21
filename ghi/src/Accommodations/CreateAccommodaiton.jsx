@@ -42,73 +42,79 @@ function AccommodationForm() {
     }
 
     return (
-        <div className="max-w-md mx-auto mt-8 p-4 bg-white shadow-md rounded-md">
-            <h2 className="text-2xl font-semibold text-center mb-4">Create an Accommodation</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor='hotel' className="block text-sm font-medium text-gray-700">Hotel:</label>
+        <div>
+            <h2 className="text-center text-2xl font-semibold whitespace-nowrap dark:text-white pb-8 pt-8 pl-4">Create an Accommodation</h2>
+            <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+                <div className="mb-5">
+                    <label htmlFor='hotel' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hotel:</label>
                     <input
                         type="text"
                         id="hotel"
                         value={hotel}
                         onChange={e => setHotel(e.target.value)}
-                        className="mt-1 p-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="i.e. Hilton, The Plaza, etc. "
                     />
                 </div>
-                <div className="mb-4">
-                    <label htmlFor='flightNumber' className="block text-sm font-medium text-gray-700">Flight Number:</label>
+                <div className="mb-5">
+                    <label htmlFor='flightNumber' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Flight Number:</label>
                     <input
                         type="text"
                         id="flightNumber"
                         value={flightNumber}
                         onChange={e => setFlightNumber(e.target.value)}
-                        className="mt-1 p-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="i.e. B3453, C3356, etc."
                         required
                     />
                 </div>
-                <div className="mb-4">
-                    <label htmlFor='flightNumber2' className="block text-sm font-medium text-gray-700">Flight Number 2:</label>
+                <div className="mb-5">
+                    <label htmlFor='flightNumber2' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Flight Number 2:</label>
                     <input
                         type="text"
                         id="flightNumber2"
                         value={flightNumber2}
                         onChange={e => setFlightNumber2(e.target.value)}
-                        className="mt-1 p-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="i.e. B3453, C3356, etc.(optional)"
                     />
                 </div>
-                <div className="mb-4">
-                    <label htmlFor='fromDate' className="block text-sm font-medium text-gray-700">From:</label>
+                <div className="mb-5">
+                    <label htmlFor='fromDate' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From:</label>
                     <input
                         type="date"
                         id="fromDate"
                         value={fromDate}
                         onChange={e => setFromDate(e.target.value)}
-                        className="mt-1 p-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="MM/DD/YYYY"
                         required
                     />
                 </div>
-                <div className="mb-4">
-                    <label htmlFor='toDate' className="block text-sm font-medium text-gray-700">To:</label>
+                <div className="mb-5">
+                    <label htmlFor='toDate' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To:</label>
                     <input
                         type="date"
                         id="toDate"
                         value={toDate}
                         onChange={e => setToDate(e.target.value)}
-                        className="mt-1 p-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="MM/DD/YYYY"
                         required
                     />
                 </div>
-                <div className="mb-4">
-                    <label htmlFor='notes' className="block text-sm font-medium text-gray-700">Additional Notes:</label>
+                <div className="mb-5">
+                    <label htmlFor='notes' className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Additional Notes:</label>
                     <input
                         type="text"
                         id="notes"
                         value={notes}
                         onChange={e => setNotes(e.target.value)}
-                        className="mt-1 p-2.5 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                        placeholder="Notes..."
                     />
                 </div>
-                <button type="submit" className="w-full py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Create Accommodation</button>
+                <button type="submit" className="text-white bg-green-400 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
             </form>
         </div>
     );
