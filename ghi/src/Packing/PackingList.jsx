@@ -22,8 +22,7 @@ function DeleteButton({ packingListId }) {
     return (
         <button
             onClick={handleDelete}
-            className="bg-red-500 hover:bg-red-700
-    text-white font-bold py-2 px-4 rounded mr-2"
+            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
         >
             Delete
         </button>
@@ -135,73 +134,74 @@ function Packing() {
         .sort((a, b) => a.priority - b.priority)
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-2xl font-semibold mb-4">My Packing List</h1>
-            <table className="table-auto w-full">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <h1 className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white pb-8 pt-8 pl-4">My Packing List</h1>
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead>
                     <tr className="bg-gray-100 dark:bg-gray-800">
-                        <th className="px-4 py-2">Item</th>
-                        <th className="px-4 py-2">Quantity</th>
-                        <th className="px-4 py-2">Category</th>
-                        <th className="px-4 py-2">Priority</th>
-                        <th className="px-4 py-2">Status</th>
-                        <th className="px-4 py-2">Notes</th>
-                        <th className="px-4 py-2">Deadline</th>
-                        <th className="px-4 py-2">Actions</th>
+                        <th scope="col" className="px-6 py-3">Item</th>
+                        <th scope="col" className="px-6 py-3">Quantity</th>
+                        <th scope="col" className="px-6 py-3">Category</th>
+                        <th scope="col" className="px-6 py-3">Priority</th>
+                        <th scope="col" className="px-6 py-3">Status</th>
+                        <th scope="col" className="px-6 py-3">Notes</th>
+                        <th scope="col" className="px-6 py-3">Deadline</th>
+                        <th scope="col" className="px-6 py-3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {sortedPackingList.map((packingItem) => (
-                        <tr key={packingItem.id}>
-                            <td className="border px-4 py-2">
+                        <tr key={packingItem.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            <td className="px-6 py-4">
                                 {packingItem.item}
                             </td>
-                            <td className="border px-4 py-2">
+                            <td className="px-6 py-4">
                                 {packingItem.quantity}
                             </td>
-                            <td className="border px-4 py-2">
+                            <td className="px-6 py-4">
                                 {packingItem.category}
                             </td>
-                            <td className="border px-4 py-2">
+                            <td className="px-6 py-4">
                                 {packingItem.priority}
                             </td>
-                            <td className="border px-4 py-2">
+                            <td className="px-6 py-4">
                                 <UpdateCheckbox
                                     packingListId={packingItem.id}
                                 />
                             </td>
-                            <td className="border px-4 py-2">
+                            <td className="px-6 py-4">
                                 {packingItem.notes}
                             </td>
-                            <td className="border px-4 py-2">
+                            <td className="px-6 py-4">
                                 {packingItem.deadline}
                             </td>
-                            <td className="border px-4 py-2">
-                                <Link
-                                    to={`/api/packing_list/edit/${packingItem.id}`}
-                                >
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-                                        Edit
-                                    </button>
-                                </Link>
-                                <DeleteButton packingListId={packingItem.id} />
-                                <Link
-                                    to={`/api/packing_list/${packingItem.id}`}
-                                >
-                                    <button className="text-white bg-gray-400 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                                        Details
-                                    </button>
-                                </Link>
+                            <td className="px-6 py-4">
+                            <div className="flex space-x-4">
+                                    <Link to={`/api/packing_list/edit/${packingItem.id}`}>
+                                        <button className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit
+                                        </button>
+                                    </Link>
+                                    <DeleteButton packingListId={packingItem.id} />
+                                    <Link
+                                        to={`/api/packing_list/${packingItem.id}`}
+                                    >
+                                        <button className="text-white bg-gray-400  hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                                            Details
+                                        </button>
+                                    </Link>
+                                </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <Link to="/api/packing_list/create/" className="block mt-4">
-                <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                    Create Packing List
-                </button>
-            </Link>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg pt-4 pb-4 pl-4">
+                <Link to="/api/packing_list/create/" className="block mt-4">
+                    <button className="text-white bg-green-400 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        Create Packing List
+                    </button>
+                </Link>
+            </div>
         </div>
     )
 }

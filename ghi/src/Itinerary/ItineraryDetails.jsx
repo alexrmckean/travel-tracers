@@ -17,7 +17,7 @@ function DeleteButton({ itineraryId }) {
     };
 
     return (
-        <button onClick={handleDelete} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+        <button onClick={handleDelete} className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
             Delete
         </button>
     );
@@ -83,6 +83,10 @@ function ItineraryDetails() {
                             <dd className="text-sm text-gray-500 font-semibold pb-4">{itinerary.num_travelers}</dd>
                         </div>
                     </dl>
+                    <DeleteButton itineraryId={itinerary_id} />
+                    <Link to={`/api/itinerary/edit/${itinerary.id}`}className='pl-4'>
+                                        <button className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+                                    </Link>
                 </div>
             </div>
             {/* <div id="accommodations" className={`p-4 rounded-lg md:p-8 dark:bg-gray-800 ${selectedACTab === 'accommodations' ? '' : 'hidden'}`} role="tabpanel" aria-labelledby="accommodations-tab">
