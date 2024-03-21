@@ -13,6 +13,7 @@ from queries.itinerary import (
 )
 from typing import Union, Optional, List ,List
 from datetime import datetime
+from authenticator import authenticator
 
 router = APIRouter()
 itinerary_queries = ItineraryQueries()
@@ -25,6 +26,7 @@ def get_weekly_calendar():
 def create_itinerary(
     itinerary: ItineraryIn,
     repo: ItineraryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     created_itinerary = repo.create(itinerary)
     if created_itinerary is None:
@@ -34,6 +36,7 @@ def create_itinerary(
 @router.get("/api/itinerary", response_model=Union[List[ItineraryOut], Error])
 def get_all(
     repo: ItineraryQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.get_all()
 

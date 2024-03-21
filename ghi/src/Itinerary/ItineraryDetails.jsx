@@ -23,6 +23,8 @@ function DeleteButton({ itineraryId }) {
     );
 }
 
+
+
 function ItineraryDetails() {
     const { itinerary_id, accommodation_id } = useParams();
 
@@ -51,6 +53,8 @@ function ItineraryDetails() {
     }
 
     console.log(accommodations)
+    
+
 
     return (
 

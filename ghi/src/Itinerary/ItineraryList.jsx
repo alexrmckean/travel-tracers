@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useItineraryQuery, useDeleteItineraryMutation } from '../app/ItinerarySlice';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import { useGetTokenQuery } from '../app/AuthSlice';
 
 function DeleteButton({ itineraryId }) {
     const [deleteItinerary] = useDeleteItineraryMutation();
@@ -31,6 +33,26 @@ function formatDate(dateString, timeZone = 'UTC') {
 function Itinerary() {
     const { data: itinerary = [], isLoading, isError } = useItineraryQuery();
     const [weeklyCalendar, setWeeklyCalendar] = useState([]);
+    const navigate = useNavigate();
+    const { data: token } = useGetTokenQuery();
+    const { data: itineraryauth = [], error: itineraryError, isLoading: itineraryLoading } = useItineraryQuery({}, {
+        skip: !token, // Skip fetching budgets until token is available
+        refetchOnMountOrArgChange: false // Prevent automatic refetching
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (token === undefined) {
+            return; // Wait until token is defined
+        }
+
+        if (!token) {
+            navigate('/api/login');
+        } else {
+            setLoading(false);
+        }
+    }, [token, navigate]);
+
 
     useEffect(() => {
         // Fetch weekly calendar data

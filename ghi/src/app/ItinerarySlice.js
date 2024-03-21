@@ -4,15 +4,18 @@ export const itineraryApi = createApi({
     reducerPath: 'itinerary',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_HOST,
+        credentials: 'include',
     }),
     endpoints: (builder) => ({
         itinerary: builder.query({
             query: () => 'api/itinerary',
-            providesTags: ['ItineraryList']
+            providesTags: ['ItineraryList'],
+            credentials: 'include',
         }),
         itineraryById: builder.query({
             query: (itinerary_id) => `api/itinerary/${itinerary_id}`,
             providesTags: (result, error, itinerary_id) => [{ type: 'itinerary', itinerary_id }],
+            credentials: 'include',
         }),
         createItinerary: builder.mutation({
             query: (body) => ({
