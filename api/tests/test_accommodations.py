@@ -1,9 +1,15 @@
 from fastapi.testclient import TestClient
 from main import app
 from routers.accommodations import AccommodationsQueries
+from authenticator import authenticator
 
 client = TestClient(app=app)
 
+def fakeAccountData():
+    return {
+        "id": 1,
+        "email": "string@string.com",
+    }
 
 class AccommodationsQueriesMock:
     def get_all(self):
@@ -18,15 +24,12 @@ class AccommodationsQueriesMock:
             "notes": "no new notes"
         },
     ]
-    def create(self, accommodations):
-        accommodation = accommodations.dict()
-        accommodation["id"] = "FAKE_ID"
-        return accommodation
 
 
 def test_get_all():
-    
+
     app.dependency_overrides[AccommodationsQueries] = AccommodationsQueriesMock
+    app.dependency_overrides[authenticator.get_current_account_data] = (fakeAccountData)
 
     res = client.get("/api/accommodations")
 

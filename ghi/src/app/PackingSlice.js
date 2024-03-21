@@ -4,6 +4,8 @@ export const packingListApi = createApi({
     reducerPath: 'packingList',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_HOST,
+        credentials: "include",
+
     }),
     tagTypes: ['PackingList'],
     endpoints: (builder) => ({
