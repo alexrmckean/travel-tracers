@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import {
-    usePackingListQuery,
-    useUpdatePackingListMutation,
-    useDeletePackingListMutation,
-    usePackingListByIdQuery,
-} from '../app/PackingSlice'
-import { useGetTokenQuery } from '../app/AuthSlice'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { usePackingListQuery, useUpdatePackingListMutation, useDeletePackingListMutation, usePackingListByIdQuery } from '../app/PackingSlice';
+import { useGetTokenQuery } from '../app/AuthSlice';
 
 function DeleteButton({ packingListId }) {
     const [deletePackingList] = useDeletePackingListMutation()
@@ -99,39 +94,30 @@ function UpdateCheckbox({ packingListId }) {
 }
 
 function Packing() {
-    const navigate = useNavigate()
-    const { data: token } = useGetTokenQuery()
-    const {
-        data: packingList = [],
-        isLoading,
-        isError,
-    } = usePackingListQuery(
-        {},
-        {
-            skip: !token, // Skip fetching packing list until token is available
-            refetchOnMountOrArgChange: false, // Prevent automatic refetching
-        }
-    )
-    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
+    const { data: token } = useGetTokenQuery();
+    const { data: packingList = [], isLoading, isError } = usePackingListQuery({}, {
+        skip: !token, // Skip fetching packing list until token is available
+        refetchOnMountOrArgChange: false // Prevent automatic refetching
+    });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (token === undefined) {
-            return // Wait until token is defined
+            return; // Wait until token is defined
         }
 
         if (!token) {
-            navigate('/api/login')
+            navigate('/api/login');
         } else {
-            setLoading(false)
+            setLoading(false);
         }
-    }, [token, navigate])
+    }, [token, navigate]);
 
-    if (isLoading) return <div>Loading...</div>
-    if (isError) return <div>Error fetching data...</div>
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error fetching data...</div>;
 
-    const sortedPackingList = packingList
-        .slice()
-        .sort((a, b) => a.priority - b.priority)
+    const sortedPackingList = packingList.slice().sort((a, b) => a.priority - b.priority);
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

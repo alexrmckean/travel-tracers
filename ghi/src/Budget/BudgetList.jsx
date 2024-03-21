@@ -23,7 +23,7 @@ function DeleteButton({ budgetId }) {
 function Budget() {
     const navigate = useNavigate();
     const { data: token } = useGetTokenQuery();
-    const { data: budgets = [], error: budgetsError, isLoading: budgetsLoading } = useBudgetsQuery({}, {
+    const { data: budgets = []} = useBudgetsQuery({}, {
         skip: !token, // Skip fetching budgets until token is available
         refetchOnMountOrArgChange: false // Prevent automatic refetching
     });

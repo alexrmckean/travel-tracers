@@ -37,6 +37,14 @@ export const authApi = createApi({
       }),
       providesTags: ['Account'],
     }),
+     deleteToken: builder.mutation({
+      query: () => ({
+      url: '/token',
+      method: 'DELETE',
+      credentials: 'include',
+    }),
+      invalidatesTags: ['Account'],
+  }),
   }),
 });
 
@@ -60,4 +68,5 @@ export default authSlice.reducer;
 export const {
 useLoginMutation,
 useGetTokenQuery,
+useDeleteTokenMutation,
 } = authApi;

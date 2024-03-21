@@ -44,6 +44,7 @@ def update_budget(
     budget_id: int,
     budget: BudgetIn,
     repo: BudgetQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[Error, BudgetOut]:
     updated_budget = repo.update(budget_id, budget)
     if updated_budget is None:
@@ -55,6 +56,7 @@ def update_budget(
 def delete_budget(
     budget_id: int,
     repo: BudgetQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
     deleted = repo.delete(budget_id)
     if not deleted:
@@ -66,6 +68,7 @@ def delete_budget(
 def get_one_budget(
     budget_id: int,
     repo: BudgetQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> BudgetOut:
     budget = repo.get_one(budget_id)
     if budget is None:

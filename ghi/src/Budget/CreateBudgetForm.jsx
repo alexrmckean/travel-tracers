@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCreateBudgetMutation } from '../app/BudgetSlice';
 import { useNavigate } from 'react-router-dom';
+import { useGetTokenQuery } from '../app/AuthSlice';
+
 
 function BudgetForm() {
+    const navigate = useNavigate(); 
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [date, setDate] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('');
-    const [createBudget] = useCreateBudgetMutation();
-    const navigate = useNavigate(); // Import useNavigate hook
+    const { data: token } = useGetTokenQuery();
+    const [createBudget] = useCreateBudgetMutation({}, {
+        skip: !token, // Skip fetching budgets until token is available
+        refetchOnMountOrArgChange: false // Prevent automatic refetching
+    });
+
+    useEffect(() => {
+        if (token === undefined) {
+            return;
+        }
+        if (!token) {
+            navigate('/api/login');
+        }
+    }, [token, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,6 +40,7 @@ function BudgetForm() {
             console.error('Error creating budget:', error);
         }
     }
+
 
     return (
         <div>
