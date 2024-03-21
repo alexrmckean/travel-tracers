@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Infographic from '../images/Infographic.png';
 
 function Homepage() {
     const [currentItemIndex, setCurrentItemIndex] = useState(0);
@@ -33,13 +34,13 @@ function Homepage() {
             {/* Header */}
             <header className="bg-sky-900 py-4">
                 <div className="container mx-auto">
-                    <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl text-center"><span className="text-transparent bg-clip-text bg-gradient-to-r to-blue-600 from-white">Access Your Travel Information Instantly: Your Destinations at Your Fingertips</span> Anytime. Anywhere.</h1>
+                    <h1 className="mb-4 text-3xl font-extrabold text-white dark:text-white md:text-5xl lg:text-6xl text-center"><span className="text-transparent bg-clip-text bg-gradient-to-r to-blue-600 from-white">Access Your Travel Information Instantly: Your Destinations at Your Fingertips</span> Anytime. Anywhere.</h1>
                     <p className="text-white mt-2 text-center pt-3 pb-5">Whether you're embarking on a business trip, planning a family getaway, or craving a quick weekend escape, Travel Tracer swiftly organizes your travel details.</p>
                 </div>
             </header>
 
             {/* Main Content */}
-            <main className="container mx-auto mt-8 bg-gray-700">
+            <main className="container mx-auto mt-8 bg-white">
                 {/* About Section */}
                 <div className="flex">
                     {/* About Section */}
@@ -54,17 +55,8 @@ function Homepage() {
 
                     {/* Features Section */}
                     <div className="w-1/2">
-                        <section className="mb-8">
-                            <h2 className="font-bold mb-4 pl-48 text-4xl pt-4">Travel Tracer Essential Tools:</h2>
-                            <ul className="list-disc list-inside text-gray-700 text-2xl pl-40 ">
-                                <li>🧭 ITINERARY: plan and organize your trips hassle-free</li>
-                                <li>🧳 ATTRACTIONS: discover popular destinations worldwide</li>
-                                <li>🧭 WEATHER: Stay informed about the weather forecast for your trip</li>
-                                <li>🧳 RESTAURANTS: Find nearby dining options to suit your tastes</li>
-                                <li>🧭 HOTEL INFO: Store important hotel details for convenient reference</li>
-                                <li>🧳 BUDGET TRACKER: Manage your travel expenses efficiently</li>
-                                <li>🧭 PACKING LIST: Create and maintain a packing list to ensure nothing is forgotten.</li>
-                            </ul>
+                        <section className="mb-8 pl-12">
+                            <img src={Infographic} className="full" alt="Infographic"/>
                         </section>
                     </div>
                 </div>

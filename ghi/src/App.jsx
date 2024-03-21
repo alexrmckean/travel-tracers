@@ -27,7 +27,7 @@ import EditAccommodationForm from './Accommodations/EditAccommodationForm';
 import AccommodationDetails from './Accommodations/AccommodationsDetails';
 import EditPackingListForm from './Packing/EditPackingListForm';
 import PackingListDetails from './Packing/PackingListDetails';
-import Homepage from './homepage';
+import Homepage from './Components/homepage';
 
 
 Homepage

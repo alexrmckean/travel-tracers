@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useItineraryByIdQuery, useDeleteItineraryMutation } from '../app/ItinerarySlice';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useAccommodationsByIdQuery } from '../app/AccommodationSlice';
 
 function DeleteButton({ itineraryId }) {
     const navigate = useNavigate();
@@ -23,10 +24,15 @@ function DeleteButton({ itineraryId }) {
 }
 
 function ItineraryDetails() {
-    const { itinerary_id } = useParams();
-    const [selectedTab, setSelectedTab] = useState('trip-details'); // Default to 'trip-details'
+    const { itinerary_id, accommodation_id } = useParams();
+
+    const [selectedTab, setSelectedTab] = useState('trip-details');
+    const [selectedACTab, setSelectedACTab] = useState('accommodations');  // Default to 'trip-details'
 
     const { data: itinerary, error, isLoading } = useItineraryByIdQuery(itinerary_id);
+
+    const { data: accommodations } = useAccommodationsByIdQuery(accommodation_id);
+
 
     const handleTabClick = (tabId) => {
         setSelectedTab(tabId);
@@ -44,7 +50,10 @@ function ItineraryDetails() {
         return <div className="text-center mt-10">Itinerary not found</div>;
     }
 
+    console.log(accommodations)
+
     return (
+
         <div className="w-full border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <ul className="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400 rtl:divide-x-reverse" id="fullWidthTab" role="tablist">
                 <li className="w-full">
@@ -76,19 +85,36 @@ function ItineraryDetails() {
                     </dl>
                 </div>
             </div>
-            <div id="accommodations" className={`p-4 rounded-lg md:p-8 dark:bg-gray-800 ${selectedTab === 'accommodations' ? '' : 'hidden'}`} role="tabpanel" aria-labelledby="accommodations-tab">
-                <h2 className="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">We invest in the world's potential</h2>
-                <ul role="list" className="space-y-4 text-gray-500 dark:text-gray-400">
-                    <li className="flex space-x-2 rtl:space-x-reverse items-center">
-                    </li>
-                    <li className="flex space-x-2 rtl:space-x-reverse items-center">
-                    </li>
-                    <li className="flex space-x-2 rtl:space-x-reverse items-center">
-                    </li>
-                    <li className="flex space-x-2 rtl:space-x-reverse items-center">
-                    </li>
-                </ul>
-            </div>
+            {/* <div id="accommodations" className={`p-4 rounded-lg md:p-8 dark:bg-gray-800 ${selectedACTab === 'accommodations' ? '' : 'hidden'}`} role="tabpanel" aria-labelledby="accommodations-tab">
+                <div className="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" role="tabpanel" aria-labelledby="accommodations">
+                    <dl className="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
+                        <div className="flex flex-col items-center justify-center">
+                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Hotel:</dt>
+                            <dd className="text-sm text-gray-500 font-semibold">{accommodations.hotel}</dd>
+                        </div>
+                        <div className="flex flex-col items-center justify-center">
+                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Flight Number 1:</dt>
+                            <dd className="text-sm text-gray-500 font-semibold"> {accommodations.flight_number}</dd>
+                        </div>
+                        <div className="flex flex-col items-center justify-center">
+                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Flight Number 2:</dt>
+                            <dd className="text-sm text-gray-500 font-semibold">{accommodations.flight_number_2}</dd>
+                        </div>
+                        <div className="flex flex-col items-center justify-center">
+                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">From Date:</dt>
+                            <dd className="text-sm text-gray-500 font-semibold pb-4">{accommodations.from_date}</dd>
+                        </div>
+                        <div className="flex flex-col items-center justify-center">
+                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">To Date:</dt>
+                            <dd className="text-sm text-gray-500 font-semibold pb-4">{accommodations.to_date}</dd>
+                        </div>
+                        <div className="flex flex-col items-center justify-center">
+                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Notes:</dt>
+                            <dd className="text-sm text-gray-500 font-semibold pb-4">{accommodations.notes}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div> */}
         </div>
     );
 }
