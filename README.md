@@ -284,6 +284,5 @@ Creating a accommodation return value:
 
 ```
 
-On the backend, the Travel Tracer application has 5 models: Account, Itinerary, Budget, Packing List, and Accommodations.
 
 On the backend, Travel Tracer comprises 5 models—Account, Itinerary, Budget, Packing List, and Accommodations—each serving a unique purpose to keep users organized during their travels.
