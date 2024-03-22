@@ -11,6 +11,7 @@ export const packingListApi = createApi({
         packingList: builder.query({
             query: () => 'api/packing_list',
             providesTags: ['PackingList'],
+            credentials: 'include',
         }),
         packingListById: builder.query({
             query: (packingList_id) => `api/packing_list/${packingList_id}`,

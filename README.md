@@ -4,7 +4,7 @@ Welcome to Travel Tracer, your ultimate companion for managing all your travel n
 Team:
 
 * William Reeves
-* Ben Austin
+* Ben Austin 
 * Alex McKean
 * Justin Ryu
 * Kaitlyn Padermos
