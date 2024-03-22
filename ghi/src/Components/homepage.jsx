@@ -4,12 +4,12 @@ import Infographic from '../images/Infographic.png';
 function Homepage() {
     const [currentItemIndex, setCurrentItemIndex] = useState(0);
     const carouselItems = [
-        "https://www.heart.org/-/media/AHA/H4GM/Article-Images/travel.jpg",
-        "https://assets-wp.boundless.com/uploads/2023/07/AdobeStock_257988664-scaled.jpeg",
-        "https://cdn.contexttravel.com/image/upload/w_1500,q_60/v1691515156/blog/Visa%202024/Blog_Visa_Requirements.jpg",
-        "https://images.ctfassets.net/7xz1x21beds9/6ti88738diHVehbHtLqFKr/96016e31860e11929af76b153272c9bd/top-view-travel-elements-collection_23-2148691133.jpg?w=2000&h=1333&fl=progressive&q=90&fm=jpg",
-        "https://media.cnn.com/api/v1/images/stellar/prod/istock-1470241971.jpg?c=16x9"
-    ];
+        'https://www.heart.org/-/media/AHA/H4GM/Article-Images/travel.jpg',
+        'https://assets-wp.boundless.com/uploads/2023/07/AdobeStock_257988664-scaled.jpeg',
+        'https://cdn.contexttravel.com/image/upload/w_1500,q_60/v1691515156/blog/Visa%202024/Blog_Visa_Requirements.jpg',
+        'https://media.cnn.com/api/v1/images/stellar/prod/istock-1470241971.jpg?c=16x9',
+        'https://i.postimg.cc/Zqsq91VV/top-view-travel-elements-collection-23-2148691133.jpg',
+    ]
 
     useEffect(() => {
         const intervalId = setInterval(() => {
