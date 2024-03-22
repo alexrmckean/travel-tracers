@@ -40,6 +40,14 @@ Travel Tracer is a monolithic application made up of 5 models which work togethe
 - **Packing List**
 - **Accommodations**
 
+
+## Functionality
+
+When visiting the app, users should be taken to the homepage. The homepage should be filled with information about our application and there should show some tabs up in the navigation bar. None of the tabs other than Home are navigable until users are logged in.
+There are options to sign up a new user and login existing users. Once logged in, users should be able to see a Logout button and are navigated to our landing page, the Itinerary page. There, users are able to view pre-existing trip itineraries sorted in a 1 week calendar.
+Users can click on itineraries can view details, edit, and delete them. On the landing page there is a button to add a new itinerary. The budget, packing list, and accommodations have the same functionality, where the tabs navigate to the respective list all pages. On those pages, users are able to create, edit, and delete new items. Except for the budget page, they also have a details button which retrieves the details for specific items.
+
+
 ## Diagram
 
 ![Img](/ghi/src/images/Wireframe.png)
@@ -286,3 +294,11 @@ Creating a accommodation return value:
 
 
 On the backend, Travel Tracer comprises 5 models—Account, Itinerary, Budget, Packing List, and Accommodations—each serving a unique purpose to keep users organized during their travels.
+
+
+Unit Tests:
+Ben - test_packing_list.py
+Justin - test_accommodations.py
+Kaitlyn - test_get_itineraries.py
+Alex - test_budgets.py
+William - test_get_one_itinerary.py
