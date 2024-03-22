@@ -4,7 +4,7 @@ from datetime import date
 from queries.pool import pool
 
 
-class Error (BaseModel):
+class Error(BaseModel):
     message: str
 
 
@@ -47,7 +47,7 @@ class PackingListQueries:
                         FROM packing_list
                         WHERE id = %s
                         """,
-                        [packing_list_id]
+                        [packing_list_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -66,14 +66,16 @@ class PackingListQueries:
                         DELETE FROM packing_list
                         WHERE id = %s
                         """,
-                        [packing_list_id]
+                        [packing_list_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-    def update(self, packing_list_id: int, packing_list: PackingListIn) -> Union[PackingListOut, Error]:
+    def update(
+        self, packing_list_id: int, packing_list: PackingListIn
+    ) -> Union[PackingListOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -97,10 +99,12 @@ class PackingListQueries:
                             packing_list.checklist_status,
                             packing_list.notes,
                             packing_list.deadline,
-                            packing_list_id
-                        ]
+                            packing_list_id,
+                        ],
                     )
-                    return self.packing_list_in_to_out(packing_list_id, packing_list)
+                    return self.packing_list_in_to_out(
+                        packing_list_id, packing_list
+                    )
         except Exception as e:
             print(e)
             return {"message": "Could not update that packing list"}
@@ -111,7 +115,14 @@ class PackingListQueries:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, item, quantity, category, priority, checklist_status, notes, deadline
+                        SELECT id,
+                        item,
+                        quantity,
+                        category,
+                        priority,
+                        checklist_status,
+                        notes,
+                        deadline
                         FROM packing_list
                         ORDER BY deadline;
                         """
@@ -124,14 +135,22 @@ class PackingListQueries:
             print(e)
             return {"message": "Could not get all packing lists"}
 
-    def create(self, packing_list: PackingListIn) -> Union[PackingListOut, Error]:
+    def create(
+        self, packing_list: PackingListIn
+    ) -> Union[PackingListOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
                         INSERT INTO packing_list
-                            (item, quantity, category, priority, checklist_status, notes, deadline)
+                            (item,
+                            quantity,
+                            category,
+                            priority,
+                            checklist_status,
+                            notes,
+                            deadline)
                         VALUES
                             (%s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
@@ -144,7 +163,7 @@ class PackingListQueries:
                             packing_list.checklist_status,
                             packing_list.notes,
                             packing_list.deadline,
-                        ]
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.packing_list_in_to_out(id, packing_list)
@@ -166,5 +185,3 @@ class PackingListQueries:
             notes=record[6],
             deadline=record[7],
         )
-
-

@@ -15,8 +15,9 @@ class ItinerariesQueriesMock:
                 "from_date": "2024-04-09",
                 "to_date": "2024-04-16",
                 "num_travelers": "5",
-        },
-    ]
+            },
+        ]
+
     def create(self, itineraries):
         itinerary = itineraries.dict()
         itinerary["id"] = "FAKE_ID"
@@ -24,14 +25,13 @@ class ItinerariesQueriesMock:
 
 
 def test_get_all():
-
     app.dependency_overrides[ItineraryQueries] = ItinerariesQueriesMock
 
     res = client.get("/api/itinerary")
 
     assert res.status_code == 200
 
-    assert res.json() ==[
+    assert res.json() == [
         {
             "id": 1,
             "name": "Beach Trip",

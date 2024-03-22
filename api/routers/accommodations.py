@@ -4,7 +4,6 @@ from fastapi import (
     status,
     Response,
     APIRouter,
-    Request,
 )
 
 from queries.accommodations import (
@@ -21,7 +20,9 @@ from authenticator import authenticator
 router = APIRouter()
 
 
-@router.post("/api/accommodations", response_model=Union[AccommodationsOut, Error])
+@router.post(
+    "/api/accommodations", response_model=Union[AccommodationsOut, Error]
+)
 def create_accommodations(
     accommodations: AccommodationsIn,
     repo: AccommodationsQueries = Depends(),
@@ -30,7 +31,10 @@ def create_accommodations(
     return repo.create(accommodations)
 
 
-@router.get("/api/accommodations/{accommodations_id}", response_model=Optional[AccommodationsOut])
+@router.get(
+    "/api/accommodations/{accommodations_id}",
+    response_model=Optional[AccommodationsOut],
+)
 def get_one_accommodations(
     accommodations_id: int,
     response: Response,
@@ -42,16 +46,20 @@ def get_one_accommodations(
     return accommodations
 
 
-@router.get("/api/accommodations", response_model=Union[List[AccommodationsOut], Error])
+@router.get(
+    "/api/accommodations", response_model=Union[List[AccommodationsOut], Error]
+)
 def get_all(
     repo: AccommodationsQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-
 ):
     return repo.get_all()
 
 
-@router.put("/api/accommodations/{accommodations_id}", response_model=Union[AccommodationsOut, Error])
+@router.put(
+    "/api/accommodations/{accommodations_id}",
+    response_model=Union[AccommodationsOut, Error],
+)
 def update_accommodations(
     accommodations_id: int,
     accommodations: AccommodationsIn,

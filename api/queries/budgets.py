@@ -4,7 +4,7 @@ from datetime import date
 from queries.pool import pool
 
 
-class Error (BaseModel):
+class Error(BaseModel):
     message: str
 
 
@@ -13,6 +13,7 @@ class BudgetIn(BaseModel):
     amount: float
     date: date
     payment_method: str
+
 
 class BudgetOut(BaseModel):
     id: int
@@ -40,7 +41,7 @@ class BudgetQueries:
                         FROM budgets
                         WHERE id = %s
                         """,
-                        [budget_id]
+                        [budget_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -61,14 +62,16 @@ class BudgetQueries:
                         DELETE FROM budgets
                         WHERE id = %s
                         """,
-                        [budget_id]
+                        [budget_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-    def update(self, budget_id: int, budget: BudgetIn) -> Union[BudgetOut, Error]:
+    def update(
+        self, budget_id: int, budget: BudgetIn
+    ) -> Union[BudgetOut, Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -88,8 +91,8 @@ class BudgetQueries:
                             budget.amount,
                             budget.date,
                             budget.payment_method,
-                            budget_id
-                        ]
+                            budget_id,
+                        ],
                     )
                     # old_data = vacation.dict()
                     # return VacationOut(id=vacation_id, **old_data)
@@ -113,8 +116,7 @@ class BudgetQueries:
                         """
                     )
                     return [
-                        self.record_to_budget_out(record)
-                        for record in result
+                        self.record_to_budget_out(record) for record in result
                     ]
         except Exception as e:
             print(e)
@@ -140,7 +142,7 @@ class BudgetQueries:
                             budget.amount,
                             budget.date,
                             budget.payment_method,
-                        ]
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.budget_in_to_out(id, budget)

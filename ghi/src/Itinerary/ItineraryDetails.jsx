@@ -29,12 +29,8 @@ function ItineraryDetails() {
     const { itinerary_id, accommodation_id } = useParams();
 
     const [selectedTab, setSelectedTab] = useState('trip-details');
-    const [selectedACTab, setSelectedACTab] = useState('accommodations');  // Default to 'trip-details'
 
     const { data: itinerary, error, isLoading } = useItineraryByIdQuery(itinerary_id);
-
-    const { data: accommodations } = useAccommodationsByIdQuery(accommodation_id);
-
 
     const handleTabClick = (tabId) => {
         setSelectedTab(tabId);
@@ -53,7 +49,7 @@ function ItineraryDetails() {
     }
 
     console.log(accommodations)
-    
+
 
 
     return (
@@ -89,40 +85,10 @@ function ItineraryDetails() {
                     </dl>
                     <DeleteButton itineraryId={itinerary_id} />
                     <Link to={`/api/itinerary/edit/${itinerary.id}`}className='pl-4'>
-                                        <button className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
-                                    </Link>
+                        <button className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+                    </Link>
                 </div>
             </div>
-            {/* <div id="accommodations" className={`p-4 rounded-lg md:p-8 dark:bg-gray-800 ${selectedACTab === 'accommodations' ? '' : 'hidden'}`} role="tabpanel" aria-labelledby="accommodations-tab">
-                <div className="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" role="tabpanel" aria-labelledby="accommodations">
-                    <dl className="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
-                        <div className="flex flex-col items-center justify-center">
-                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Hotel:</dt>
-                            <dd className="text-sm text-gray-500 font-semibold">{accommodations.hotel}</dd>
-                        </div>
-                        <div className="flex flex-col items-center justify-center">
-                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Flight Number 1:</dt>
-                            <dd className="text-sm text-gray-500 font-semibold"> {accommodations.flight_number}</dd>
-                        </div>
-                        <div className="flex flex-col items-center justify-center">
-                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Flight Number 2:</dt>
-                            <dd className="text-sm text-gray-500 font-semibold">{accommodations.flight_number_2}</dd>
-                        </div>
-                        <div className="flex flex-col items-center justify-center">
-                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">From Date:</dt>
-                            <dd className="text-sm text-gray-500 font-semibold pb-4">{accommodations.from_date}</dd>
-                        </div>
-                        <div className="flex flex-col items-center justify-center">
-                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">To Date:</dt>
-                            <dd className="text-sm text-gray-500 font-semibold pb-4">{accommodations.to_date}</dd>
-                        </div>
-                        <div className="flex flex-col items-center justify-center">
-                            <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Notes:</dt>
-                            <dd className="text-sm text-gray-500 font-semibold pb-4">{accommodations.notes}</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div> */}
         </div>
     );
 }

@@ -15,6 +15,6 @@ steps = [
         """,
         """
         DROP TABLE packing_list;
-        """
+        """,
     ],
 ]

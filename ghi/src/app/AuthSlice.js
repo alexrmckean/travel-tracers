@@ -37,7 +37,7 @@ export const authApi = createApi({
       }),
       providesTags: ['Account'],
     }),
-     deleteToken: builder.mutation({
+      deleteToken: builder.mutation({
       query: () => ({
       url: '/token',
       method: 'DELETE',

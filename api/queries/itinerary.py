@@ -3,6 +3,7 @@ from queries.pool import pool
 from datetime import date, timedelta, datetime, timezone
 from typing import List, Optional, Union
 
+
 class Error(BaseModel):
     message: str
 
@@ -37,7 +38,7 @@ class ItineraryQueries:
                         FROM itinerary
                         WHERE id = %s
                         """,
-                        [itinerary_id]
+                        [itinerary_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -46,7 +47,6 @@ class ItineraryQueries:
         except Exception as e:
             print(e)
             return {"message": "Could not find itinerary"}
-
 
     def create(self, itinerary: ItineraryIn) -> ItineraryOut:
         # connect the database
@@ -67,8 +67,8 @@ class ItineraryQueries:
                         itinerary.destination,
                         itinerary.from_date,
                         itinerary.to_date,
-                        itinerary.num_travelers
-                    ]
+                        itinerary.num_travelers,
+                    ],
                 )
                 id = result.fetchone()[0]
                 return self.itinerary_in_to_out(id, itinerary)
@@ -84,15 +84,16 @@ class ItineraryQueries:
                         DELETE FROM itinerary
                         WHERE id = %s
                         """,
-                        [itinerary_id]
+                        [itinerary_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-
-    def update(self, itinerary_id: int, itinerary: ItineraryIn) -> Union[ItineraryOut, Error]:
+    def update(
+        self, itinerary_id: int, itinerary: ItineraryIn
+    ) -> Union[ItineraryOut, Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -115,7 +116,7 @@ class ItineraryQueries:
                             itinerary.to_date,
                             itinerary.num_travelers,
                             itinerary_id,
-                        ]
+                        ],
                     )
 
                     return self.itinerary_in_to_out(itinerary_id, itinerary)
@@ -132,7 +133,12 @@ class ItineraryQueries:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT id, name, destination, from_date, to_date, num_travelers
+                        SELECT id,
+                        name,
+                        destination,
+                        from_date,
+                        to_date,
+                        num_travelers
                         FROM itinerary
                         ORDER BY id;
                         """
@@ -149,7 +155,6 @@ class ItineraryQueries:
         old_data = itinerary.dict()
         return ItineraryOut(id=id, **old_data)
 
-
     def record_to_itinerary_out(self, record):
         return ItineraryOut(
             id=record[0],
@@ -160,13 +165,14 @@ class ItineraryQueries:
             num_travelers=record[5],
         )
 
-
     def get_weekly_calendar(self) -> List[List[Union[str, datetime]]]:
         try:
             today = datetime.now(timezone.utc).date()
             start_of_week = today - timedelta(days=today.weekday())
-            end_of_week = start_of_week + timedelta(days=6)
-            date_range = [[(start_of_week + timedelta(days=i)).isoformat()] for i in range(7)]
+            date_range = [
+                [(start_of_week + timedelta(days=i)).isoformat()]
+                for i in range(7)
+            ]
             return date_range
         except Exception as e:
             print(e)

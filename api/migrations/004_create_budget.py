@@ -11,6 +11,6 @@ steps = [
         """,
         """
         DROP TABLE budgets;
-        """
+        """,
     ],
 ]

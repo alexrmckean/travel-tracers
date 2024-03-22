@@ -1,10 +1,10 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import Optional, Union, List
 from queries.pool import pool
 from datetime import date
 
 
-class Error (BaseModel):
+class Error(BaseModel):
     message: str
 
 
@@ -28,31 +28,38 @@ class AccommodationsOut(BaseModel):
 
 
 class AccommodationsQueries:
-    def create(self, accommodations: AccommodationsIn) -> Union[AccommodationsOut, Error]:
-            try:
-                with pool.connection() as conn:
-                    with conn.cursor() as db:
-                        result = db.execute(
-                            """
-                            INSERT INTO accommodations
-                                (hotel, flight_number, flight_number_2, from_date, to_date, notes)
-                            VALUES
-                                (%s, %s, %s, %s, %s, %s)
-                            RETURNING id;
-                            """,
-                            [
-                                accommodations.hotel,
-                                accommodations.flight_number,
-                                accommodations.flight_number_2,
-                                accommodations.from_date,
-                                accommodations.to_date,
-                                accommodations.notes,
-                            ]
-                        )
-                        id = result.fetchone()[0]
-                        return self.accommodations_in_to_out(id, accommodations)
-            except Exception:
-                return {"message": "Create did not work"}
+    def create(
+        self, accommodations: AccommodationsIn
+    ) -> Union[AccommodationsOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        INSERT INTO accommodations
+                            (hotel,
+                            flight_number,
+                            flight_number_2,
+                            from_date,
+                            to_date,
+                            notes)
+                        VALUES
+                            (%s, %s, %s, %s, %s, %s)
+                        RETURNING id;
+                        """,
+                        [
+                            accommodations.hotel,
+                            accommodations.flight_number,
+                            accommodations.flight_number_2,
+                            accommodations.from_date,
+                            accommodations.to_date,
+                            accommodations.notes,
+                        ],
+                    )
+                    id = result.fetchone()[0]
+                    return self.accommodations_in_to_out(id, accommodations)
+        except Exception:
+            return {"message": "Create did not work"}
 
     def get_one(self, accommodations_id: int) -> Optional[AccommodationsOut]:
         try:
@@ -70,7 +77,7 @@ class AccommodationsQueries:
                         FROM accommodations
                         WHERE id = %s
                         """,
-                        [accommodations_id]
+                        [accommodations_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -80,14 +87,19 @@ class AccommodationsQueries:
             print(e)
             return {"message": "Could not get accommodations"}
 
-
     def get_all(self) -> Union[Error, List[AccommodationsOut]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, hotel, flight_number, flight_number_2, from_date, to_date, notes
+                        SELECT id,
+                        hotel,
+                        flight_number,
+                        flight_number_2,
+                        from_date,
+                        to_date,
+                        notes
                         FROM accommodations
                         ORDER BY id;
                         """
@@ -100,8 +112,9 @@ class AccommodationsQueries:
             print(e)
             return {"message": "Could not get all accommodations"}
 
-
-    def update(self, accommodations_id: int, accommodations: AccommodationsIn) -> Union[AccommodationsOut, Error]:
+    def update(
+        self, accommodations_id: int, accommodations: AccommodationsIn
+    ) -> Union[AccommodationsOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -123,14 +136,15 @@ class AccommodationsQueries:
                             accommodations.from_date,
                             accommodations.to_date,
                             accommodations.notes,
-                            accommodations_id
-                        ]
+                            accommodations_id,
+                        ],
                     )
-                    return self.accommodations_in_to_out(accommodations_id, accommodations)
+                    return self.accommodations_in_to_out(
+                        accommodations_id, accommodations
+                    )
         except Exception as e:
             print(e)
             return {"message": "Could not update accommodations"}
-
 
     def delete(self, accommodations_id: int) -> bool:
         try:
@@ -141,18 +155,18 @@ class AccommodationsQueries:
                         DELETE FROM accommodations
                         WHERE id = %s
                         """,
-                        [accommodations_id]
+                        [accommodations_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-
-    def accommodations_in_to_out(self, id: int, accommodations: AccommodationsIn):
-            old_data = accommodations.dict()
-            return AccommodationsOut(id=id, **old_data)
-
+    def accommodations_in_to_out(
+        self, id: int, accommodations: AccommodationsIn
+    ):
+        old_data = accommodations.dict()
+        return AccommodationsOut(id=id, **old_data)
 
     def record_to_accommodations_out(self, record):
         return AccommodationsOut(

@@ -16,6 +16,7 @@ from authenticator import authenticator
 
 router = APIRouter()
 
+
 @router.post("/api/packing_list", response_model=Union[PackingListOut, Error])
 def create_packing_list(
     packing_list: PackingListIn,
@@ -27,14 +28,21 @@ def create_packing_list(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
     return created_packing_list
 
-@router.get("/api/packing_list", response_model=Union[List[PackingListOut], Error])
+
+@router.get(
+    "/api/packing_list", response_model=Union[List[PackingListOut], Error]
+)
 def get_all(
     repo: PackingListQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.get_all()
 
-@router.put("/api/packing_list/{packing_list_id}", response_model=Union[PackingListOut, Error])
+
+@router.put(
+    "/api/packing_list/{packing_list_id}",
+    response_model=Union[PackingListOut, Error],
+)
 def update_packing_list(
     packing_list_id: int,
     packing_list: PackingListIn,
@@ -44,6 +52,7 @@ def update_packing_list(
     if updated_packing_list is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return updated_packing_list
+
 
 @router.delete("/api/packing_list/{packing_list_id}", response_model=bool)
 def delete_packing_list(
@@ -55,7 +64,11 @@ def delete_packing_list(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return True
 
-@router.get("/api/packing_list/{packing_list_id}", response_model=Optional[PackingListOut])
+
+@router.get(
+    "/api/packing_list/{packing_list_id}",
+    response_model=Optional[PackingListOut],
+)
 def get_one_packing_list(
     packing_list_id: int,
     response: Response,

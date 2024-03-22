@@ -2,9 +2,7 @@ from fastapi import (
     Depends,
     HTTPException,
     status,
-    Response,
     APIRouter,
-    Request,
 )
 from queries.budgets import (
     Error,
@@ -24,9 +22,8 @@ def create_budget(
     budget: BudgetIn,
     repo: BudgetQueries = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
-
 ):
-    print('Printing out id')
+    print("Printing out id")
     print(account_data["id"])
     return repo.create(budget)
 

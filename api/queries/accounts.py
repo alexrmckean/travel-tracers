@@ -3,28 +3,33 @@ from jwtdown_fastapi.authentication import Token
 from queries.pool import pool
 from typing import Optional
 
+
 class DuplicateAccountError(ValueError):
     pass
 
+
 class AccountIn(BaseModel):
-    email:str
-    password:str
-    full_name:str
+    email: str
+    password: str
+    full_name: str
+
 
 class AccountOut(BaseModel):
     id: str
     email: str
-    full_name:str
+    full_name: str
+
 
 class AccountToken(Token):
     account: AccountOut
 
+
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
-class AccountQueries:
-    def get(self, email:str) -> Optional[AccountOutWithPassword]:
 
+class AccountQueries:
+    def get(self, email: str) -> Optional[AccountOutWithPassword]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -36,7 +41,7 @@ class AccountQueries:
                         FROM accounts
                         WHERE email = %s
                         """,
-                        [email]
+                        [email],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -46,8 +51,9 @@ class AccountQueries:
             print(e)
             return {"message": "Could not get that account"}
 
-
-    def create(self, info:AccountIn, hashed_password:str) -> AccountOutWithPassword:
+    def create(
+        self, info: AccountIn, hashed_password: str
+    ) -> AccountOutWithPassword:
         with pool.connection() as conn:
             # get a cursor (something to run SQL with)
             with conn.cursor() as db:
@@ -64,17 +70,14 @@ class AccountQueries:
                         (%s, %s, %s)
                     RETURNING id, email, password, full_name;
                     """,
-                    [
-                        info.email,
-                        hashed_password,
-                        info.full_name
-                    ]
+                    [info.email, hashed_password, info.full_name],
                 )
                 id = result.fetchone()[0]
                 # Return new data
                 old_data = info.dict()
-                return AccountOutWithPassword(id=id, hashed_password=hashed_password, **old_data)
-
+                return AccountOutWithPassword(
+                    id=id, hashed_password=hashed_password, **old_data
+                )
 
     def record_to_account_out(self, record):
         return AccountOutWithPassword(

@@ -4,7 +4,7 @@ import { accommodationsApi } from './AccommodationSlice';
 import accountReducer from './AccountSlice';
 import { packingListApi } from './PackingSlice';
 import { itineraryApi } from './ItinerarySlice';
-import logoutReducer from './LogoutSlice';
+import logoutReducer from './logoutSlice';
 import { authApi } from './AuthSlice';
 import authReducer from './AuthSlice';
 import { budgetApi } from './BudgetSlice';
