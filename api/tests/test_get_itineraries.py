@@ -1,13 +1,8 @@
 from fastapi.testclient import TestClient
 from main import app
 from routers.itinerary import ItineraryQueries
-from datetime import date, datetime
-from authenticator import authenticator
-from pydantic import BaseModel
 
 client = TestClient(app=app)
-
-
 
 
 class ItinerariesQueriesMock:
@@ -22,7 +17,6 @@ class ItinerariesQueriesMock:
                 "num_travelers": "5",
             },
         ]
-
 
 
 def test_get_all():
