@@ -1,8 +1,13 @@
 from fastapi.testclient import TestClient
 from main import app
 from routers.itinerary import ItineraryQueries
+from datetime import date, datetime
+from authenticator import authenticator
+from pydantic import BaseModel
 
 client = TestClient(app=app)
+
+
 
 
 class ItinerariesQueriesMock:
@@ -18,10 +23,6 @@ class ItinerariesQueriesMock:
             },
         ]
 
-    def create(self, itineraries):
-        itinerary = itineraries.dict()
-        itinerary["id"] = "FAKE_ID"
-        return itinerary
 
 
 def test_get_all():
