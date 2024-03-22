@@ -31,7 +31,7 @@ function PackingListDetails() {
                 <p><span className="font-semibold">Quantity:</span> {packingList.quantity}</p>
                 <p><span className="font-semibold">Category:</span> {packingList.category}</p>
                 <p><span className="font-semibold">Priority:</span> {packingList.priority}</p>
-                <p><span className="font-semibold">Status:</span> {packingList.status ? 'Checked' : 'Unchecked'}</p>
+                <p><span className="font-semibold">Status:</span> {packingList.checklist_status ? 'Checked' : 'Unchecked'}</p>
                 <p><span className="font-semibold">Notes:</span> {packingList.notes}</p>
                 <p><span className="font-semibold">Deadline:</span> {packingList.deadline}</p>
             </div>
