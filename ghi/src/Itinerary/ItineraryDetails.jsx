@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useItineraryByIdQuery, useDeleteItineraryMutation } from '../app/ItinerarySlice';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useAccommodationsByIdQuery } from '../app/AccommodationSlice';
 
 function DeleteButton({ itineraryId }) {
     const navigate = useNavigate();
@@ -23,10 +22,8 @@ function DeleteButton({ itineraryId }) {
     );
 }
 
-
-
 function ItineraryDetails() {
-    const { itinerary_id, accommodation_id } = useParams();
+    const { itinerary_id } = useParams();
 
     const [selectedTab, setSelectedTab] = useState('trip-details');
 
@@ -48,12 +45,7 @@ function ItineraryDetails() {
         return <div className="text-center mt-10">Itinerary not found</div>;
     }
 
-    console.log(accommodations)
-
-
-
     return (
-
         <div className="w-full border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <ul className="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg sm:flex dark:divide-gray-600 dark:text-gray-400 rtl:divide-x-reverse" id="fullWidthTab" role="tablist">
                 <li className="w-full">
@@ -63,8 +55,8 @@ function ItineraryDetails() {
                     <button onClick={() => handleTabClick('accommodations')} id="accommodations" data-tabs-target="#accommodations" type="button" role="tab" aria-controls="accommodations" aria-selected={selectedTab === 'accommodations'} className={`inline-block w-full p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none dark:bg-gray-700 dark:hover:bg-gray-600 ${selectedTab === 'accommodations' ? 'bg-gray-200' : ''}`}>Accommodations</button>
                 </li>
             </ul>
-            <div id="trip-details" className={`border-t border-gray-200 dark:border-gray-600 ${selectedTab === 'trip-details' ? '' : 'hidden'}`}>
-                <div className="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" role="tabpanel" aria-labelledby="trip-details">
+            <div id="trip-details" className={`border-t border-gray-200 dark:border-gray-600 ${selectedTab === 'trip-details' ? '' : 'hidden'}`} role="tabpanel" aria-labelledby="trip-details">
+                <div className="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800">
                     <dl className="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 dark:text-white sm:p-8">
                         <div className="flex flex-col items-center justify-center">
                             <dt className="mb-1 font-semibold md:text-md dark:text-gray-400">Trip Name:</dt>
@@ -84,7 +76,7 @@ function ItineraryDetails() {
                         </div>
                     </dl>
                     <DeleteButton itineraryId={itinerary_id} />
-                    <Link to={`/api/itinerary/edit/${itinerary.id}`}className='pl-4'>
+                    <Link to={`/api/itinerary/edit/${itinerary.id}`} className='pl-4'>
                         <button className="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
                     </Link>
                 </div>
